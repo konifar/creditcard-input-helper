@@ -5,8 +5,9 @@ object Depends {
 
     object GradlePlugin {
         const val android = "com.android.tools.build:gradle:4.0.0-alpha09"
-        val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Kotlin.version}"
-        val kotlinSerialization = "org.jetbrains.kotlin:kotlin-serialization:${Kotlin.version}"
+        const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Kotlin.version}"
+        const val kotlinSerialization =
+            "org.jetbrains.kotlin:kotlin-serialization:${Kotlin.version}"
     }
 
     object Test {
@@ -27,16 +28,16 @@ object Depends {
 
         object DataBinding {
             private const val version = "3.2.1"
-            val common = "androidx.databinding:databinding-common:$version"
-            val runtime = "androidx.databinding:databinding-runtime:$version"
+            const val common = "androidx.databinding:databinding-common:$version"
+            const val runtime = "androidx.databinding:databinding-runtime:$version"
         }
 
         object Lifecycle {
-            val liveData = "androidx.lifecycle:lifecycle-livedata:2.2.0"
-            val liveDataCoreKtx = "androidx.lifecycle:lifecycle-livedata-core-ktx:2.2.0"
-            val liveDataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
-            val extension = "androidx.lifecycle:lifecycle-extensions:2.2.0"
-            val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+            const val liveData = "androidx.lifecycle:lifecycle-livedata:2.2.0"
+            const val liveDataCoreKtx = "androidx.lifecycle:lifecycle-livedata-core-ktx:2.2.0"
+            const val liveDataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+            const val extension = "androidx.lifecycle:lifecycle-extensions:2.2.0"
+            const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
         }
     }
 
@@ -45,7 +46,6 @@ object Depends {
         const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$version"
     }
 
-    j
     object Timber {
         const val core = "com.jakewharton.timber:timber:4.7.1"
     }

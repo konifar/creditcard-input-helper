@@ -1,0 +1,19 @@
+def major = 0
+def minor = 1
+def patch = 0
+
+def versionCode = 0
+if (System.getenv("CIRCLE_TAG") != null) {
+    // Release
+    versionCode = major * 10000 + minor * 100 + patch
+} else if ("true" == System.getenv("CI")) {
+    // Development
+    versionCode = System.getenv("CIRCLE_BUILD_NUM") as Integer
+} else {
+    // Local
+    versionCode = major * 10000 + minor * 100 + patch
+}
+println("version code: " + versionCode)
+
+project.ext.appVersionName = "$major.$minor.$patch"
+project.ext.appVersionCode = versionCode
