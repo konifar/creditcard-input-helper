@@ -1,0 +1,26 @@
+import dependencies.Depends
+
+buildscript {
+    ext.kotlin_version = Depends.Kotlin.version
+    repositories {
+        mavenLocal()
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath Depends.GradlePlugin.android
+        classpath Depends.GradlePlugin.kotlin
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
