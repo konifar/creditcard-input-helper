@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">CreditCard Input Helper</string>
+
+    <string name="pan">Card number</string>
+    <string name="pan_hint">1234 5678 9012 3456</string>
+    <string name="holder_name">Holder name</string>
+    <string name="holder_name_hint">HOLDER NAME</string>
+    <string name="expiry_month_year">Expiry (Month / Year)</string>
+    <string name="expiry_month_hint">04</string>
+    <string name="expiry_year_hint">22</string>
+    <string name="cvv2">Security code</string>
+    <string name="cvv2_hint">123</string>
+    <string name="check">Check</string>
 </resources>
