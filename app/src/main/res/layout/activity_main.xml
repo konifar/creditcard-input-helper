@@ -143,15 +143,15 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/cvv2"
                     style="@style/CardTextInput"
-                    android:layout_width="60dp"
                     android:layout_marginTop="@dimen/space_8dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cvv2_label">
 
                     <EditText
+                        android:id="@+id/cvv2_edit"
                         style="@style/CardEditText.Number"
+                        android:layout_width="100dp"
                         android:autofillHints="creditCardSecurityCode"
-                        android:gravity="center"
                         android:hint="@string/cvv2_hint"
                         android:maxLength="4" />
 

@@ -6,7 +6,7 @@ import android.text.TextWatcher
 import io.konifar.cardinputhelper.cardbrand.CardBrand
 import io.konifar.cardinputhelper.formatter.CardNumberFormatter
 import io.konifar.cardinputhelper.formatter.DividerType
-import io.konifar.cardinputhelper.validator.CardNumberError
+import io.konifar.cardinputhelper.validator.errors.CardNumberError
 import io.konifar.cardinputhelper.validator.CardNumberValidator
 
 open class CardNumberTextWatcher(
@@ -22,7 +22,7 @@ open class CardNumberTextWatcher(
 
     open fun onCardBrandChanged(cardBrand: CardBrand) {}
 
-    open fun onCardNumberErroChanged(error: CardNumberError) {}
+    open fun onCardNumberErrorChanged(error: CardNumberError) {}
 
     override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
@@ -63,7 +63,7 @@ open class CardNumberTextWatcher(
     private fun validateText(s: Editable) {
         currentCardBrand?.let {
             val error = CardNumberValidator.validateOnTextChanged(s, it)
-            onCardNumberErroChanged(error)
+            onCardNumberErrorChanged(error)
         }
     }
 

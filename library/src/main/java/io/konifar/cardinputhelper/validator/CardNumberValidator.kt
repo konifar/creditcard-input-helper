@@ -3,6 +3,7 @@ package io.konifar.cardinputhelper.validator
 import io.konifar.cardinputhelper.cardbrand.CardBrand
 import io.konifar.cardinputhelper.cardbrand.UnSupported
 import io.konifar.cardinputhelper.ext.digits
+import io.konifar.cardinputhelper.validator.errors.CardNumberError
 
 object CardNumberValidator {
 
@@ -26,7 +27,7 @@ object CardNumberValidator {
 
     fun validateOnTextChanged(cardNumber: CharSequence, cardBrand: CardBrand): CardNumberError {
         val number = cardNumber.digits()
-        if (cardBrand.hasEnoughLength(cardNumber)) {
+        if (cardBrand.hasEnoughNumberLength(cardNumber)) {
             if (!validateSupportedBrand(cardBrand)) return CardNumberError.UNSUPPORTED_BRAND
             if (!validateBrandFormat(number, cardBrand)) return CardNumberError.INVALID_BRAND_FORMAT
             if (!validateLuhnAlgorithem(number)) return CardNumberError.INVALID_CARD_NUMBER
@@ -37,7 +38,7 @@ object CardNumberValidator {
     private fun validateLuhnAlgorithem(number: String) = LuhnAlgorithm.isValid(number)
 
     private fun validateLength(number: String, cardBrand: CardBrand) =
-        cardBrand.hasEnoughLength(number)
+        cardBrand.hasEnoughNumberLength(number)
 
     private fun validateEmpty(number: String) = number.isNotEmpty()
 

@@ -1,4 +1,4 @@
-package io.konifar.cardinputhelper.validator
+package io.konifar.cardinputhelper.validator.errors
 
 enum class CardNumberError {
     IS_EMPTY,

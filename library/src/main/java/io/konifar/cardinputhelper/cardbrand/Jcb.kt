@@ -8,5 +8,6 @@ import java.util.regex.Pattern
 class Jcb(
     override val brandPattern: Pattern = Pattern.compile("^35[0-9]{2}$"),
     override val verifyPattern: Pattern = Pattern.compile("^35[0-9]{14}$"),
-    override val format: IntArray = intArrayOf(4, 4, 4, 4)
+    override val format: IntArray = intArrayOf(4, 4, 4, 4),
+    override val securityCodeLength: Int = 3
 ) : CardBrand
