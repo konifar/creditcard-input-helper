@@ -1,0 +1,37 @@
+import dependencies.Depends
+import dependencies.Versions
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply from: "$rootDir/gradle/app-version.gradle"
+
+android {
+    compileSdkVersion Versions.androidCompileSdkVersion
+
+    defaultConfig {
+        minSdkVersion Versions.androidMinSdkVersion
+        targetSdkVersion Versions.androidTargetSdkVersion
+        versionCode project.appVersionCode
+        versionName project.appVersionName
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation Depends.Kotlin.stdlib
+
+    // AndroidX
+    implementation Depends.AndroidX.appCompat
+    implementation Depends.AndroidX.coreKtx
+
+    // Test
+    testImplementation Depends.Test.junit
+}
