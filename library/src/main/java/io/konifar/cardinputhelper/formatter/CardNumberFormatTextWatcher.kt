@@ -5,7 +5,7 @@ import android.text.Selection
 import android.text.TextWatcher
 import io.konifar.cardinputhelper.cardtype.CardType
 
-class CardNumberFormatTextWatcher(
+open class CardNumberFormatTextWatcher(
     private val dividerType: DividerType = DividerType.SPACE,
     private val supportedCardType: Array<CardType> = CardType.all
 ) : TextWatcher {
@@ -14,6 +14,10 @@ class CardNumberFormatTextWatcher(
     private var isChangingText = false
     private var cursorPos = 0
     private var editVelocity = 0
+
+    private var currentCardType: CardType? = null
+
+    open fun onCardTypeChanged(cardType: CardType) {}
 
     override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
@@ -27,16 +31,26 @@ class CardNumberFormatTextWatcher(
     override fun afterTextChanged(s: Editable) {
         if (!isChangingText) {
             isChangingText = true
+
+            val nextCardType = CardType.from(s, supportedCardType)
+            if (currentCardType != nextCardType) {
+                currentCardType = nextCardType
+                currentCardType?.let {
+                    onCardTypeChanged(it)
+                }
+            }
+
             formatText(s)
             isChangingText = false
         }
     }
 
     private fun formatText(s: Editable) {
-        val cardType = CardType.from(s, supportedCardType)
-        val formattedText = formatter.format(s, cardType, dividerType)
-        s.replace(0, s.length, formattedText)
-        adjustCursorPos(formattedText, s)
+        currentCardType?.let {
+            val formattedText = formatter.format(s, it, dividerType)
+            s.replace(0, s.length, formattedText)
+            adjustCursorPos(formattedText, s)
+        }
     }
 
     private fun adjustCursorPos(formattedText: String, s: Editable) {
