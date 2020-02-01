@@ -1,15 +1,15 @@
 package io.konifar.cardinputhelper.formatter
 
-import io.konifar.cardinputhelper.cardtype.CardType
+import io.konifar.cardinputhelper.cardbrand.CardBrand
 
 class CardNumberFormatter {
 
-    fun format(cardNumber: CharSequence, cardType: CardType, dividerType: DividerType): String {
-        if (!cardType.validateFormatSetting()) {
+    fun format(cardNumber: CharSequence, cardBrand: CardBrand, dividerType: DividerType): String {
+        if (!cardBrand.validateFormatSetting()) {
             return cardNumber.toString()
         }
-        val number = CardType.removeExceptDigit(cardNumber)
-        val cardLength = cardType.length()
+        val number = CardBrand.removeExceptDigit(cardNumber)
+        val cardLength = cardBrand.length()
         if (cardLength <= 0) {
             return cardNumber.toString()
         }
@@ -18,7 +18,7 @@ class CardNumberFormatter {
         return StringBuilder().apply {
             var start = 0
             var end = 0
-            for (f in cardType.format) {
+            for (f in cardBrand.format) {
                 end += f
                 val isEnd = end >= formatLength
                 append(number, start, if (isEnd) formatLength else end)

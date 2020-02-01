@@ -1,34 +1,32 @@
-package io.konifar.cardinputhelper.cardtype
+package io.konifar.cardinputhelper.cardbrand
 
 import java.util.regex.Pattern
 
-interface CardType {
+interface CardBrand {
 
     companion object {
         private const val MIN_CARD_CHECK_LENGTH = 4
 
         val all = arrayOf(
-            VisaCardType(),
-            MastercardCardType(),
-            AmexCardType(),
-            DiscoverCardType(),
-            DinersCardType(),
-            JcbCardType()
+            Visa(),
+            Mastercard(),
+            Amex(),
+            Discover(),
+            Diners(),
+            Jcb()
         )
 
-        fun from(cardNumber: CharSequence, supportedCardType: Array<CardType>): CardType {
-            val number =
-                removeExceptDigit(
-                    cardNumber
-                )
+        fun from(cardNumber: CharSequence, supportedCardType: Array<CardBrand>): CardBrand {
+            val number = removeExceptDigit(cardNumber)
             if (number.length >= MIN_CARD_CHECK_LENGTH) {
                 for (cardType in supportedCardType) {
                     if (cardType.matchBrand(number)) {
                         return cardType
                     }
                 }
+                return UnSupported()
             }
-            return OtherCardType()
+            return Unchecked()
         }
 
         fun removeExceptDigit(cardNumber: CharSequence): String {
