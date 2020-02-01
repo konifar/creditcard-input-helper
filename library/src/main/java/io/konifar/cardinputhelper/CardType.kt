@@ -1,6 +1,5 @@
 package io.konifar.cardinputhelper
 
-import androidx.annotation.VisibleForTesting
 import java.util.regex.Pattern
 
 /**
@@ -10,11 +9,12 @@ import java.util.regex.Pattern
  * Sample card data
  * https://stripe.com/docs/testing
  */
-enum class Card(
+enum class CardType(
     val brandPattern: Pattern,
     val verifyPattern: Pattern,
     val format: IntArray
 ) {
+
     // 3782 822463 10005
     AMEX(
         Pattern.compile("^3[47][0-9]{2}$"),
@@ -62,13 +62,35 @@ enum class Card(
         return brandPattern.matcher(cardNumber.subSequence(0, MIN_CARD_CHECK_LENGTH)).matches()
     }
 
+    fun validateFormatSetting(): Boolean {
+        if (format.isEmpty()) {
+            throw IllegalStateException("Card:${name} format is empty")
+        }
+
+        for (i in format) {
+            if (i <= 0) {
+                throw IllegalStateException("Card: ${name} format pattern must contain numbers greater than zero");
+            }
+        }
+
+        return true
+    }
+
+    fun length(): Int {
+        var sum = 0
+        for (i in format) {
+            sum += i
+        }
+        return sum
+    }
+
     companion object {
         private const val MIN_CARD_CHECK_LENGTH = 4
 
-        fun from(cardNumber: CharSequence): Card {
+        fun from(cardNumber: CharSequence, supportedCard: Array<CardType> = values()): CardType {
             val number = removeExceptDigit(cardNumber)
             if (number.length >= MIN_CARD_CHECK_LENGTH) {
-                for (card in values()) {
+                for (card in supportedCard) {
                     if (card.matchBrand(cardNumber)) {
                         return card
                     }
@@ -77,7 +99,6 @@ enum class Card(
             return OTHER
         }
 
-        @VisibleForTesting
         fun removeExceptDigit(cardNumber: CharSequence): String {
             val builder = StringBuilder()
             for (c in cardNumber) {

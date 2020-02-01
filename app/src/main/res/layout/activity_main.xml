@@ -54,6 +54,7 @@
                     app:layout_constraintTop_toBottomOf="@id/pan_label">
 
                     <EditText
+                        android:id="@+id/pan_edit"
                         style="@style/CardEditText.Number"
                         android:autofillHints="creditCardNumber"
                         android:hint="@string/pan_hint"
