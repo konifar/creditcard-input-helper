@@ -1,5 +1,6 @@
 package io.konifar.cardinputhelper
 
+import androidx.annotation.VisibleForTesting
 import java.util.regex.Pattern
 
 /**
@@ -14,34 +15,78 @@ enum class Card(
     val verifyPattern: Pattern,
     val format: IntArray
 ) {
+    // 3782 822463 10005
     AMEX(
         Pattern.compile("^3[47][0-9]{2}$"),
-        Pattern.compile("^3[47][0-9]{13}$"), //
+        Pattern.compile("^3[47][0-9]{13}$"),
         intArrayOf(4, 6, 5)
     ),
+    // 4242 4242 4242 4242
     VISA(
         Pattern.compile("^4[0-9]{3}?"),
         Pattern.compile("^4[0-9]{15}?"),
         intArrayOf(4, 4, 4, 4)
     ),
+    // 5555 5555 5555 4444
     MASTERCARD(
         Pattern.compile("^5[1-5][0-9]{2}$"),
         Pattern.compile("^5[1-5][0-9]{14}$"),
         intArrayOf(4, 4, 4, 4)
     ),
+    // 6011 1111 1111 1117
     DISCOVER(
         Pattern.compile("^6(?:011|5[0-9]{2})$"),
         Pattern.compile("^6(?:011|5[0-9]{2})[0-9]{12}$"),
         intArrayOf(4, 4, 4, 4)
     ),
+    // 3622 7206 2716 67
     DINERS(
         Pattern.compile("^3(?:0[0-5]|[68][0-9])[0-9]$"),
         Pattern.compile("^3(?:0[0-5]|[68][0-9])[0-9]{11}$"),
         intArrayOf(4, 4, 4, 2)
     ),
+    // 3566 0020 2036 0505
     JCB(
         Pattern.compile("^35[0-9]{2}$"),
         Pattern.compile("^35[0-9]{14}$"),
         intArrayOf(4, 4, 4, 4)
-    )
+    ),
+    // 1234 5678 9012 3456
+    OTHER(
+        Pattern.compile("^[0-9]{4}$"),
+        Pattern.compile("^[0-9]{16}$"),
+        intArrayOf(4, 4, 4, 4)
+    );
+
+    fun matchBrand(cardNumber: CharSequence): Boolean {
+        return brandPattern.matcher(cardNumber.subSequence(0, MIN_CARD_CHECK_LENGTH)).matches()
+    }
+
+    companion object {
+        private const val MIN_CARD_CHECK_LENGTH = 4
+
+        fun from(cardNumber: CharSequence): Card {
+            val number = removeExceptDigit(cardNumber)
+            if (number.length >= MIN_CARD_CHECK_LENGTH) {
+                for (card in values()) {
+                    if (card.matchBrand(cardNumber)) {
+                        return card
+                    }
+                }
+            }
+            return OTHER
+        }
+
+        @VisibleForTesting
+        fun removeExceptDigit(cardNumber: CharSequence): String {
+            val builder = StringBuilder()
+            for (c in cardNumber) {
+                if (c.isDigit()) {
+                    builder.append(c)
+                }
+            }
+            return builder.toString()
+        }
+    }
+
 }
