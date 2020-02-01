@@ -1,4 +1,4 @@
-package io.konifar.cardinputhelper
+package io.konifar.cardinputhelper.formatter
 
 enum class DividerType(val character: Char) {
     SPACE(" ".toCharArray().first()),

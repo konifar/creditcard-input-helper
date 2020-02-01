@@ -3,12 +3,11 @@ package io.konifar.cardinputhelper.formatter
 import android.text.Editable
 import android.text.Selection
 import android.text.TextWatcher
-import io.konifar.cardinputhelper.CardType
-import io.konifar.cardinputhelper.DividerType
+import io.konifar.cardinputhelper.cardtype.CardType
 
 class CardNumberFormatTextWatcher(
     private val dividerType: DividerType = DividerType.SPACE,
-    private val supportedCardType: Array<CardType> = CardType.values()
+    private val supportedCardType: Array<CardType> = CardType.all
 ) : TextWatcher {
 
     private val formatter = CardNumberFormatter()
