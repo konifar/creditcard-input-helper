@@ -1,16 +1,19 @@
-package io.konifar.cardinputhelper.formatter
+package io.konifar.cardinputhelper
 
 import android.text.Editable
 import android.text.Selection
 import android.text.TextWatcher
 import io.konifar.cardinputhelper.cardbrand.CardBrand
+import io.konifar.cardinputhelper.formatter.CardNumberFormatter
+import io.konifar.cardinputhelper.formatter.DividerType
+import io.konifar.cardinputhelper.validator.CardNumberError
+import io.konifar.cardinputhelper.validator.CardNumberValidator
 
-open class CardNumberFormatTextWatcher(
+open class CardNumberTextWatcher(
     private val dividerType: DividerType = DividerType.SPACE,
     private val supportedCardBrand: Array<CardBrand> = CardBrand.all
 ) : TextWatcher {
 
-    private val formatter = CardNumberFormatter()
     private var isChangingText = false
     private var cursorPos = 0
     private var editVelocity = 0
@@ -18,6 +21,8 @@ open class CardNumberFormatTextWatcher(
     private var currentCardBrand: CardBrand? = null
 
     open fun onCardBrandChanged(cardBrand: CardBrand) {}
+
+    open fun onCardNumberErroChanged(error: CardNumberError) {}
 
     override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
@@ -41,15 +46,24 @@ open class CardNumberFormatTextWatcher(
             }
 
             formatText(s)
+            validateText(s)
+
             isChangingText = false
         }
     }
 
     private fun formatText(s: Editable) {
         currentCardBrand?.let {
-            val formattedText = formatter.format(s, it, dividerType)
+            val formattedText = CardNumberFormatter.format(s, it, dividerType)
             s.replace(0, s.length, formattedText)
             adjustCursorPos(formattedText, s)
+        }
+    }
+
+    private fun validateText(s: Editable) {
+        currentCardBrand?.let {
+            val error = CardNumberValidator.validateOnTextChanged(s, it)
+            onCardNumberErroChanged(error)
         }
     }
 

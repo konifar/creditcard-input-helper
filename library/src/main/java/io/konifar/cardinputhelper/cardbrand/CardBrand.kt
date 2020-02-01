@@ -1,5 +1,6 @@
 package io.konifar.cardinputhelper.cardbrand
 
+import io.konifar.cardinputhelper.ext.digits
 import java.util.regex.Pattern
 
 interface CardBrand {
@@ -17,7 +18,7 @@ interface CardBrand {
         )
 
         fun from(cardNumber: CharSequence, supportedCardType: Array<CardBrand>): CardBrand {
-            val number = removeExceptDigit(cardNumber)
+            val number = cardNumber.digits()
             if (number.length >= MIN_CARD_CHECK_LENGTH) {
                 for (cardType in supportedCardType) {
                     if (cardType.matchBrand(number)) {
@@ -27,16 +28,6 @@ interface CardBrand {
                 return UnSupported()
             }
             return Unchecked()
-        }
-
-        fun removeExceptDigit(cardNumber: CharSequence): String {
-            val builder = StringBuilder()
-            for (c in cardNumber) {
-                if (c.isDigit()) {
-                    builder.append(c)
-                }
-            }
-            return builder.toString()
         }
     }
 
@@ -74,4 +65,8 @@ interface CardBrand {
         }
         return sum
     }
+
+    fun hasEnoughLength(cardNumber: CharSequence) = cardNumber.digits().length >= length()
+
+    fun isValidFormat(number: CharSequence) = verifyPattern.matcher(number).matches()
 }

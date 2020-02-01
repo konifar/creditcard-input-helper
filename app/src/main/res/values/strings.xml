@@ -11,4 +11,11 @@
     <string name="cvv2">Security code</string>
     <string name="cvv2_hint">123</string>
     <string name="check">Check</string>
+
+    <string name="number_error_is_empty">Number is empty</string>
+    <string name="number_error_unsupported_brand">Brand is not supported</string>
+    <string name="number_error_not_enough_length">Number is too short</string>
+    <string name="number_error_invalid_brand_format">Number format is invalid</string>
+    <string name="number_error_invalid_card_number">Number is invalid</string>
+
 </resources>
