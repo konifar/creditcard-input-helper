@@ -22,7 +22,7 @@ open class CardNumberTextWatcher(
 
     open fun onCardBrandChanged(cardBrand: CardBrand) {}
 
-    open fun onCardNumberErrorDetected(error: CardNumberError) {}
+    open fun onCardNumberErroChanged(error: CardNumberError) {}
 
     override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
@@ -62,14 +62,8 @@ open class CardNumberTextWatcher(
 
     private fun validateText(s: Editable) {
         currentCardBrand?.let {
-            if (it.hasEnoughLength(s)) {
-                val error = CardNumberValidator.validate(s, it)
-                if (error != CardNumberError.NONE) {
-                    onCardNumberErrorDetected(error)
-                }
-            } else {
-                onCardNumberErrorDetected(CardNumberError.NONE)
-            }
+            val error = CardNumberValidator.validateOnTextChanged(s, it)
+            onCardNumberErroChanged(error)
         }
     }
 

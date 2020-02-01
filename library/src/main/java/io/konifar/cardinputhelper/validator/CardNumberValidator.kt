@@ -6,18 +6,31 @@ import io.konifar.cardinputhelper.ext.digits
 
 object CardNumberValidator {
 
-    fun validate(cardNumber: CharSequence, supportedCardBrand: Array<CardBrand>): CardNumberError {
+    fun validateOnFocusChanged(
+        cardNumber: CharSequence,
+        supportedCardBrand: Array<CardBrand>
+    ): CardNumberError {
         val cardBrand = CardBrand.from(cardNumber, supportedCardBrand)
-        return validate(cardNumber, cardBrand)
+        return validateOnFocusChanged(cardNumber, cardBrand)
     }
 
-    fun validate(cardNumber: CharSequence, cardBrand: CardBrand): CardNumberError {
+    fun validateOnFocusChanged(cardNumber: CharSequence, cardBrand: CardBrand): CardNumberError {
         val number = cardNumber.digits()
         if (!validateEmpty(number)) return CardNumberError.IS_EMPTY
         if (!validateLength(number, cardBrand)) return CardNumberError.NOT_ENOUGH_LENGTH
         if (!validateSupportedBrand(cardBrand)) return CardNumberError.UNSUPPORTED_BRAND
         if (!validateBrandFormat(number, cardBrand)) return CardNumberError.INVALID_BRAND_FORMAT
         if (!validateLuhnAlgorithem(number)) return CardNumberError.INVALID_CARD_NUMBER
+        return CardNumberError.NONE
+    }
+
+    fun validateOnTextChanged(cardNumber: CharSequence, cardBrand: CardBrand): CardNumberError {
+        val number = cardNumber.digits()
+        if (cardBrand.hasEnoughLength(cardNumber)) {
+            if (!validateSupportedBrand(cardBrand)) return CardNumberError.UNSUPPORTED_BRAND
+            if (!validateBrandFormat(number, cardBrand)) return CardNumberError.INVALID_BRAND_FORMAT
+            if (!validateLuhnAlgorithem(number)) return CardNumberError.INVALID_CARD_NUMBER
+        }
         return CardNumberError.NONE
     }
 

@@ -33,12 +33,12 @@ class MainActivity : AppCompatActivity() {
         ) {
             override fun onCardBrandChanged(cardBrand: CardBrand) = bindBrandName(cardBrand)
 
-            override fun onCardNumberErrorDetected(error: CardNumberError) = bindError(error)
+            override fun onCardNumberErroChanged(error: CardNumberError) = bindError(error)
         })
 
         binding.check.setOnClickListener {
             val number = binding.panEdit.text
-            val error = CardNumberValidator.validate(number, SUPPORTED_CARD_BRANDS)
+            val error = CardNumberValidator.validateOnFocusChanged(number, SUPPORTED_CARD_BRANDS)
             bindError(error)
         }
     }
