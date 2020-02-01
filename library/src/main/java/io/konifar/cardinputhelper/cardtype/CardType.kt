@@ -8,12 +8,12 @@ interface CardType {
         private const val MIN_CARD_CHECK_LENGTH = 4
 
         val all = arrayOf(
-            AmexCardType(),
-            DinersCardType(),
-            DiscoverCardType(),
-            JcbCardType(),
+            VisaCardType(),
             MastercardCardType(),
-            VisaCardType()
+            AmexCardType(),
+            DiscoverCardType(),
+            DinersCardType(),
+            JcbCardType()
         )
 
         fun from(cardNumber: CharSequence, supportedCardType: Array<CardType>): CardType {
@@ -23,7 +23,7 @@ interface CardType {
                 )
             if (number.length >= MIN_CARD_CHECK_LENGTH) {
                 for (cardType in supportedCardType) {
-                    if (cardType.matchBrand(cardNumber)) {
+                    if (cardType.matchBrand(number)) {
                         return cardType
                     }
                 }
