@@ -1,15 +1,22 @@
 package com.konifar.cardinputhelperexample
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.InputFilter.LengthFilter
+import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.konifar.cardinputhelper.R
 import com.konifar.cardinputhelper.databinding.ActivityMainBinding
 import io.konifar.cardinputhelper.CardNumberTextWatcher
 import io.konifar.cardinputhelper.cardbrand.*
+import io.konifar.cardinputhelper.ext.digits
 import io.konifar.cardinputhelper.formatter.DividerType
-import io.konifar.cardinputhelper.validator.CardNumberError
 import io.konifar.cardinputhelper.validator.CardNumberValidator
+import io.konifar.cardinputhelper.validator.CardSecurityCodeValidator
+import io.konifar.cardinputhelper.validator.errors.CardNumberError
+import io.konifar.cardinputhelper.validator.errors.CardSecurityCodeError
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,19 +38,69 @@ class MainActivity : AppCompatActivity() {
             dividerType = DividerType.HYPHEN,
             supportedCardBrand = SUPPORTED_CARD_BRANDS
         ) {
-            override fun onCardBrandChanged(cardBrand: CardBrand) = bindBrandName(cardBrand)
+            override fun onCardBrandChanged(cardBrand: CardBrand) {
+                bindBrandName(cardBrand)
+                clearCvv2(cardBrand)
+            }
 
-            override fun onCardNumberErroChanged(error: CardNumberError) = bindError(error)
+            override fun onCardNumberErrorChanged(error: CardNumberError) = bindNumberError(error)
+        })
+
+        binding.cvv2Edit.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable) {
+                val brand = CardBrand.from(binding.panEdit.text, SUPPORTED_CARD_BRANDS)
+                if (brand.hasEnoughSecurityCodeLength(binding.cvv2Edit.text)) {
+                    binding.cvv2.error = null
+                }
+            }
         })
 
         binding.check.setOnClickListener {
-            val number = binding.panEdit.text
-            val error = CardNumberValidator.validateOnFocusChanged(number, SUPPORTED_CARD_BRANDS)
-            bindError(error)
+            validateNumber()
+            validateCvv2()
         }
     }
 
-    private fun bindError(error: CardNumberError) {
+    private fun clearCvv2(cardBrand: CardBrand) {
+        binding.cvv2Edit.run {
+            text = null
+            filters = arrayOf(LengthFilter(cardBrand.securityCodeLength))
+        }
+        binding.cvv2.error = null
+    }
+
+    private fun validateCvv2() {
+        val cvv2 = binding.cvv2Edit.text
+        val number = binding.panEdit.text.digits()
+        val error = CardSecurityCodeValidator.validateOnFocusChanged(cvv2, number, SUPPORTED_CARD_BRANDS)
+        bindCvv2Error(error)
+    }
+
+    private fun bindCvv2Error(error: CardSecurityCodeError) {
+        val errorResId = when (error) {
+            CardSecurityCodeError.IS_EMPTY -> R.string.cvv2_error_is_empty
+            CardSecurityCodeError.NOT_ENOUGH_LENGTH -> R.string.cvv2_error_not_enough_length
+            else -> 0
+        }
+
+        if (errorResId > 0) {
+            binding.cvv2.error = getString(errorResId)
+        } else {
+            binding.cvv2.error = null
+        }
+    }
+
+    private fun validateNumber() {
+        val number = binding.panEdit.text
+        val error = CardNumberValidator.validateOnFocusChanged(number, SUPPORTED_CARD_BRANDS)
+        bindNumberError(error)
+    }
+
+    private fun bindNumberError(error: CardNumberError) {
         val errorResId = when (error) {
             CardNumberError.INVALID_BRAND_FORMAT -> R.string.number_error_invalid_brand_format
             CardNumberError.INVALID_CARD_NUMBER -> R.string.number_error_invalid_card_number

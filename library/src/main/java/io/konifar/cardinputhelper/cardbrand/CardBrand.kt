@@ -34,6 +34,7 @@ interface CardBrand {
     val brandPattern: Pattern
     val verifyPattern: Pattern
     val format: IntArray
+    val securityCodeLength: Int
 
     fun matchBrand(cardNumber: CharSequence): Boolean {
         return brandPattern.matcher(
@@ -66,7 +67,9 @@ interface CardBrand {
         return sum
     }
 
-    fun hasEnoughLength(cardNumber: CharSequence) = cardNumber.digits().length >= length()
+    fun hasEnoughNumberLength(cardNumber: CharSequence) = cardNumber.digits().length >= length()
+
+    fun hasEnoughSecurityCodeLength(code: CharSequence) = code.length >= securityCodeLength
 
     fun isValidFormat(number: CharSequence) = verifyPattern.matcher(number).matches()
 }

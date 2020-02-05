@@ -18,4 +18,7 @@
     <string name="number_error_invalid_brand_format">Number format is invalid</string>
     <string name="number_error_invalid_card_number">Number is invalid</string>
 
+    <string name="cvv2_error_is_empty">Security code is empty</string>
+    <string name="cvv2_error_not_enough_length">Security code is too short</string>
+
 </resources>
