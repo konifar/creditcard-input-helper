@@ -6,8 +6,7 @@
     <string name="holder_name">Holder name</string>
     <string name="holder_name_hint">HOLDER NAME</string>
     <string name="expiry_month_year">Expiry (Month / Year)</string>
-    <string name="expiry_month_hint">04</string>
-    <string name="expiry_year_hint">22</string>
+    <string name="expiry_month_year_hint">04/22</string>
     <string name="cvv2">Security code</string>
     <string name="cvv2_hint">123</string>
     <string name="check">Check</string>
@@ -17,6 +16,13 @@
     <string name="number_error_not_enough_length">Number is too short</string>
     <string name="number_error_invalid_brand_format">Number format is invalid</string>
     <string name="number_error_invalid_card_number">Number is invalid</string>
+
+    <string name="month_year_error_is_empty">Month/Year is empty</string>
+    <string name="month_year_error_expired">Expired</string>
+    <string name="month_year_error_year_invalid">Year is invalid</string>
+    <string name="month_year_error_year_required">Year is required</string>
+    <string name="month_year_error_month_invalid">Month is invalid</string>
+    <string name="month_year_error_month_required">Month is required</string>
 
     <string name="cvv2_error_is_empty">Security code is empty</string>
     <string name="cvv2_error_not_enough_length">Security code is too short</string>

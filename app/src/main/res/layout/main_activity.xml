@@ -97,37 +97,19 @@
                     app:layout_constraintTop_toBottomOf="@id/name" />
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/expiry_month"
+                    android:id="@+id/expiry_month_year"
                     style="@style/CardTextInput"
-                    android:layout_width="50dp"
+                    android:layout_width="100dp"
                     android:layout_marginTop="@dimen/space_8dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/expiry_label">
 
                     <EditText
+                        android:id="@+id/expiry_month_year_edit"
                         style="@style/CardEditText.Number"
                         android:autofillHints="creditCardExpirationMonth"
-                        android:gravity="center"
-                        android:hint="@string/expiry_month_hint"
-                        android:maxLength="2" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/expiry_year"
-                    style="@style/CardTextInput"
-                    android:layout_width="50dp"
-                    android:layout_marginStart="@dimen/space_8dp"
-                    android:layout_marginTop="@dimen/space_8dp"
-                    app:layout_constraintStart_toEndOf="@id/expiry_month"
-                    app:layout_constraintTop_toBottomOf="@id/expiry_label">
-
-                    <EditText
-                        style="@style/CardEditText.Number"
-                        android:autofillHints="creditCardExpirationYear"
-                        android:gravity="center"
-                        android:hint="@string/expiry_year_hint"
-                        android:maxLength="2" />
+                        android:hint="@string/expiry_month_year_hint"
+                        android:maxLength="5" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -138,7 +120,7 @@
                     android:layout_marginTop="@dimen/space_16dp"
                     android:text="@string/cvv2"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/expiry_month" />
+                    app:layout_constraintTop_toBottomOf="@id/expiry_month_year" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/cvv2"

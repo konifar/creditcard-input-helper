@@ -7,13 +7,15 @@ import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.konifar.cardinputhelper.R
-import com.konifar.cardinputhelper.databinding.ActivityMainBinding
+import com.konifar.cardinputhelper.databinding.MainActivityBinding
+import io.konifar.cardinputhelper.CardMonthYearTextWatcher
 import io.konifar.cardinputhelper.CardNumberTextWatcher
 import io.konifar.cardinputhelper.cardbrand.*
 import io.konifar.cardinputhelper.ext.digits
-import io.konifar.cardinputhelper.formatter.DividerType
+import io.konifar.cardinputhelper.formatter.CardNumberSeparatorType
 import io.konifar.cardinputhelper.validator.CardNumberValidator
 import io.konifar.cardinputhelper.validator.CardSecurityCodeValidator
+import io.konifar.cardinputhelper.validator.errors.CardMonthYearError
 import io.konifar.cardinputhelper.validator.errors.CardNumberError
 import io.konifar.cardinputhelper.validator.errors.CardSecurityCodeError
 
@@ -28,14 +30,14 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private val binding: ActivityMainBinding by lazy {
-        DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+    private val binding: MainActivityBinding by lazy {
+        DataBindingUtil.setContentView<MainActivityBinding>(this, R.layout.main_activity)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.panEdit.addTextChangedListener(object : CardNumberTextWatcher(
-            dividerType = DividerType.HYPHEN,
+            separatorType = CardNumberSeparatorType.HYPHEN,
             supportedCardBrand = SUPPORTED_CARD_BRANDS
         ) {
             override fun onCardBrandChanged(cardBrand: CardBrand) {
@@ -44,6 +46,10 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onCardNumberErrorChanged(error: CardNumberError) = bindNumberError(error)
+        })
+
+        binding.expiryMonthYearEdit.addTextChangedListener(object : CardMonthYearTextWatcher() {
+            override fun onCardMonthYearErrorChanged(error: CardMonthYearError) = bindMonthYearError(error)
         })
 
         binding.cvv2Edit.addTextChangedListener(object : TextWatcher {
@@ -114,6 +120,24 @@ class MainActivity : AppCompatActivity() {
             binding.pan.error = getString(errorResId)
         } else {
             binding.pan.error = null
+        }
+    }
+
+    private fun bindMonthYearError(error: CardMonthYearError) {
+        val errorResId = when (error) {
+            CardMonthYearError.EXPIRED -> R.string.month_year_error_expired
+            CardMonthYearError.YEAR_INVALID -> R.string.month_year_error_year_invalid
+            CardMonthYearError.YEAR_REQUIRED -> R.string.month_year_error_year_required
+            CardMonthYearError.MONTH_INVALID -> R.string.month_year_error_month_invalid
+            CardMonthYearError.MONTH_REQUIRED -> R.string.month_year_error_month_required
+            CardMonthYearError.IS_EMPTY -> R.string.month_year_error_is_empty
+            else -> 0
+        }
+
+        if (errorResId > 0) {
+            binding.expiryMonthYear.error = getString(errorResId)
+        } else {
+            binding.expiryMonthYear.error = null
         }
     }
 
