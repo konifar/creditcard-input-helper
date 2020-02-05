@@ -34,4 +34,9 @@ dependencies {
 
     // Test
     testImplementation Depends.Test.junit
+    testImplementation Depends.Test.testRunner
+    testImplementation Depends.Test.testRules
+    testImplementation Depends.Test.testCoreKtx
+    testImplementation Depends.Test.androidJunit4Ktx
+    testImplementation Depends.Test.mockitoKotlin
 }
