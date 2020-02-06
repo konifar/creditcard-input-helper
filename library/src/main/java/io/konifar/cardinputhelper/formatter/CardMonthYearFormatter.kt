@@ -44,7 +44,7 @@ object CardMonthYearFormatter {
             }
 
             val modifiedMonthYear = when {
-                month.toInt() < 10 && !month.startsWith("0") -> "0${monthYear.digits()}"
+                month.toInt() in 2..9 && !month.startsWith("0") -> "0${monthYear.digits()}"
                 else -> monthYear.digits()
             }
 
@@ -53,6 +53,20 @@ object CardMonthYearFormatter {
                 val endIndex = (result.length).coerceAtMost(5)
                 return result.substring(0, endIndex)
             }
+        }
+
+        return monthYear.toString()
+    }
+
+    fun formatForDeleted(monthYear: CharSequence, beforeText: String): String {
+        if (monthYear.isEmpty() || monthYear == SLASH) {
+            return ""
+        }
+
+        val isSlashDeleted = beforeText.contains(SLASH) && !monthYear.contains(SLASH)
+        if (isSlashDeleted) {
+            val indexBeforeSlash = beforeText.indexOf(SLASH) - 1
+            return monthYear.replaceRange(indexBeforeSlash, indexBeforeSlash + 1, SLASH).toString()
         }
 
         return monthYear.toString()

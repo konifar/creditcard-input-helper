@@ -31,10 +31,10 @@ class CardMonthYearFormatterTest(
                 arrayOf("01/2", "01/2"),
                 arrayOf("01/23", "01/23"),
                 arrayOf("123/", "12/3"),
-                arrayOf("1/", "01/"),
-                arrayOf("1/2", "01/2"),
-                arrayOf("1/23", "01/23"),
-                arrayOf("1/234", "01/23"),
+                arrayOf("1/", "1/"),
+                arrayOf("1/2", "1/2"),
+                arrayOf("1/23", "1/23"),
+                arrayOf("1/234", "1/23"),
                 arrayOf("12/34", "12/34"),
                 arrayOf("123/4", "12/34"),
                 arrayOf("1234/", "12/34"),
@@ -46,7 +46,7 @@ class CardMonthYearFormatterTest(
     }
 
     @Test
-    fun extract() {
+    fun format() {
         assertEquals(output, CardMonthYearFormatter.format(input))
     }
 }

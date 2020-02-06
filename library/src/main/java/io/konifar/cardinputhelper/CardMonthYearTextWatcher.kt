@@ -32,18 +32,19 @@ open class CardMonthYearTextWatcher : TextWatcher {
         if (!isChangingText) {
             isChangingText = true
 
-            if (isSlashDeleted(s)) {
-                val indexBeforeSlash = beforeText.indexOf(SLASH) - 1
-                s.replace(indexBeforeSlash, indexBeforeSlash + 1, "")
+            val formattedText = if (isDeleted(s)) {
+                CardMonthYearFormatter.formatForDeleted(s, beforeText)
+            } else {
+                CardMonthYearFormatter.format(s)
             }
 
-            val formattedText = CardMonthYearFormatter.format(s)
             s.replace(0, s.length, formattedText)
-
             val error = CardMonthYearValidator.validateOnTextChanged(formattedText)
             onCardMonthYearErrorChanged(error)
 
-            adjustCursorPos(formattedText, s)
+            if (!isDeleted(s)) {
+//                adjustCursorPos(formattedText, s)
+            }
 
             isChangingText = false
         }
@@ -52,6 +53,8 @@ open class CardMonthYearTextWatcher : TextWatcher {
     private fun isSlashDeleted(s: CharSequence): Boolean {
         return beforeText.contains(SLASH) && !s.contains(SLASH)
     }
+
+    private fun isDeleted(s: CharSequence) = s.length < beforeText.length
 
     private fun adjustCursorPos(formattedText: String, s: Editable) {
         val i = cursorPos
