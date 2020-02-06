@@ -49,8 +49,10 @@ object CardMonthYearFormatter {
             }
 
             if (modifiedMonthYear.length > 2) {
-                val result = StringBuilder(modifiedMonthYear).insert(2, SLASH).toString()
-                val endIndex = (result.length).coerceAtMost(5)
+                val slashInsertOffset = if (month == "0" || month == "1") 1 else 2
+                val result = StringBuilder(modifiedMonthYear).insert(slashInsertOffset, SLASH).toString()
+                val maxEndIndex = if (month.length == 1) 4 else 5
+                val endIndex = (result.length).coerceAtMost(maxEndIndex)
                 return result.substring(0, endIndex)
             }
         }

@@ -135,7 +135,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (errorResId > 0) {
-            binding.expiryMonthYear.error = getString(errorResId)
+//            binding.expiryMonthYear.error = getString(errorResId)
         } else {
             binding.expiryMonthYear.error = null
         }

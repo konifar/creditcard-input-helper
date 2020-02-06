@@ -33,6 +33,7 @@ class CardMonthYearFormatterTest(
                 arrayOf("123/", "12/3"),
                 arrayOf("1/", "1/"),
                 arrayOf("1/2", "1/2"),
+                arrayOf("0/2", "0/2"),
                 arrayOf("1/23", "1/23"),
                 arrayOf("1/234", "1/23"),
                 arrayOf("12/34", "12/34"),
