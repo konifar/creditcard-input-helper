@@ -33,9 +33,9 @@ open class CardMonthYearTextWatcher : TextWatcher {
             isChangingText = true
 
             val formattedText = if (isDeleted(s)) {
-                CardMonthYearFormatter.formatForDeleted(s, beforeText)
+                CardMonthYearFormatter.formatForDeletingChar(s, beforeText)
             } else {
-                CardMonthYearFormatter.format(s)
+                CardMonthYearFormatter.formatForInsertingChar(s)
             }
 
             s.replace(0, s.length, formattedText)

@@ -9,3 +9,13 @@ fun CharSequence.digits(): String {
     }
     return builder.toString()
 }
+
+fun CharSequence.digitsAndSlash(): String {
+    val builder = StringBuilder()
+    for (c in this) {
+        if (c.isDigit() || c == "/".toCharArray().first()) {
+            builder.append(c)
+        }
+    }
+    return builder.toString()
+}
