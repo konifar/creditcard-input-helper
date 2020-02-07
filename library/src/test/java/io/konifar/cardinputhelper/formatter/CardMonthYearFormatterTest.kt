@@ -10,7 +10,7 @@ import org.junit.runners.Parameterized
 class CardMonthYearFormatterTest {
 
     @RunWith(Parameterized::class)
-    class ForInsertingChar(
+    class ForInserting(
         private val input: String,
         private val output: String
     ) {
@@ -77,9 +77,45 @@ class CardMonthYearFormatterTest {
         }
 
         @Test
-        fun formatForInsertingChar() {
-            assertEquals(output, CardMonthYearFormatter.formatForInsertingChar(input))
+        fun formatForInserting() {
+            assertEquals(output, CardMonthYearFormatter.formatForInserting(input))
         }
     }
 
+    @RunWith(Parameterized::class)
+    class ForDeleting(
+        private val inputAfter: String,
+        private val inputBefore: String,
+        private val output: String
+    ) {
+
+        companion object {
+            @JvmStatic
+            @Parameterized.Parameters
+            fun data(): List<Array<out Any?>> {
+                return listOf(
+                    arrayOf("", "/", ""),
+                    arrayOf("/", "/1", ""),
+                    arrayOf("/", "1/", ""),
+                    arrayOf("1", "1/", ""),
+                    arrayOf("/1", "/12", "/1"),
+                    arrayOf("12", "/12", "/12"),
+                    arrayOf("/2", "/12", "/2"),
+                    arrayOf("1/", "1/2", "1/"),
+                    arrayOf("12", "1/2", "/2"),
+                    arrayOf("/2", "1/2", "/2"),
+                    arrayOf("01/", "01/2", "01/"),
+                    arrayOf("0/2", "01/2", "0/2"),
+                    arrayOf("1/2", "01/2", "1/2"),
+                    arrayOf("012", "01/2", "0/2"),
+                    arrayOf("01/", "01/2", "01/")
+                )
+            }
+        }
+
+        @Test
+        fun formatForInserting() {
+            assertEquals(output, CardMonthYearFormatter.formatForDeleting(inputAfter, inputBefore))
+        }
+    }
 }

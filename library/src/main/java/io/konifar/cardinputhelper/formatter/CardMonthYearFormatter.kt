@@ -15,11 +15,7 @@ object CardMonthYearFormatter {
         return text
     }
 
-    fun formatForPasting(monthYear: CharSequence): String {
-        return monthYear.toString()
-    }
-
-    fun formatForInsertingChar(monthYear: CharSequence): String {
+    fun formatForInserting(monthYear: CharSequence): String {
         val checkedMonthYear = removeUnnecessarySlash(monthYear.digitsAndSlash())
         if (checkedMonthYear.isEmpty()) {
             return ""
@@ -95,15 +91,24 @@ object CardMonthYearFormatter {
         }
     }
 
-    fun formatForDeletingChar(monthYear: CharSequence, beforeText: String): String {
+    fun formatForDeleting(monthYear: CharSequence, beforeText: String): String {
         if (monthYear.isEmpty() || monthYear == SLASH) {
             return ""
         }
 
         val isSlashDeleted = beforeText.contains(SLASH) && !monthYear.contains(SLASH)
         if (isSlashDeleted) {
-            val indexBeforeSlash = beforeText.indexOf(SLASH) - 1
-            return monthYear.replaceRange(indexBeforeSlash, indexBeforeSlash + 1, SLASH).toString()
+            val indexBeforeSlash = (beforeText.indexOf(SLASH) - 1)
+            if (indexBeforeSlash < 0) {
+                return "$SLASH$monthYear"
+            } else {
+                val modified = monthYear.replaceRange(indexBeforeSlash, indexBeforeSlash + 1, SLASH).toString()
+                return if (modified == SLASH) {
+                    ""
+                } else {
+                    modified
+                }
+            }
         }
 
         return monthYear.toString()
