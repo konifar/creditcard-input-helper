@@ -118,4 +118,58 @@ class CardMonthYearFormatterTest {
             assertEquals(output, CardMonthYearFormatter.formatForDeleting(inputAfter, inputBefore))
         }
     }
+
+    @RunWith(Parameterized::class)
+    class CursorPos(
+        private val inputFormatted: String,
+        private val inputAfter: String,
+        private val inputBefore: String,
+        private val output: Int
+    ) {
+
+        companion object {
+            @JvmStatic
+            @Parameterized.Parameters
+            fun data(): List<Array<out Any?>> {
+                return listOf(
+                    // Inserted slash
+                    arrayOf("0/", "0", "", 1),
+                    arrayOf("1/", "1", "", 1),
+                    arrayOf("2/", "2", "", 2),
+                    // Inserted month
+                    arrayOf("12/", "12/", "1/", 3),
+                    arrayOf("1/3", "13/", "1/", 3),
+                    arrayOf("1/", "1//", "1/", 2),
+                    arrayOf("1/", "/1/", "1/", 0),
+                    arrayOf("1/2", "1/2", "/2", 1),
+                    // Inserted year
+                    arrayOf("12/3", "12/3", "12/", 4),
+                    arrayOf("12/3", "123/", "12/", 4),
+                    arrayOf("01/2", "01/2", "01/", 4),
+                    arrayOf("01/23", "01/23", "01/2", 5),
+                    arrayOf("01/32", "01/32", "01/2", 4),
+                    arrayOf("11/2", "11/2", "1/2", 3),
+                    // Deleted slash
+                    arrayOf("", "", "/", 0),
+                    arrayOf("", "", "0", 0),
+                    arrayOf("", "1", "1/", 0),
+                    arrayOf("", "/", "1/", 0),
+                    // Deleted month
+                    arrayOf("1/", "12", "12/", 1),
+                    arrayOf("0/", "01", "01/", 1),
+                    arrayOf("1/", "1/", "12/", 1),
+                    arrayOf("2/", "2/", "12/", 0),
+                    arrayOf("1/3", "1/3", "12/3", 1),
+                    arrayOf("1/3", "1/3", "01/3", 0),
+                    arrayOf("2/3", "2/3", "12/3", 0),
+                    arrayOf("01/", "01/", "01/3", 3)
+                )
+            }
+        }
+
+        @Test
+        fun calculateCursorPos() {
+            assertEquals(output, CardMonthYearFormatter.calculateCursorPos(inputFormatted, inputAfter, inputBefore))
+        }
+    }
 }
