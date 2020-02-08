@@ -84,18 +84,18 @@ object CardMonthYearFormatter {
     }
 
     fun formatForDeleting(monthYear: CharSequence, beforeText: String): String {
-        if (monthYear.isEmpty() || monthYear == SLASH) {
+        if (monthYear.isEmpty() || monthYear.toString() == SLASH) {
             return ""
         }
 
         val isSlashDeleted = beforeText.contains(SLASH) && !monthYear.contains(SLASH)
         if (isSlashDeleted) {
             val indexBeforeSlash = (beforeText.indexOf(SLASH) - 1)
-            if (indexBeforeSlash < 0) {
-                return "$SLASH$monthYear"
+            return if (indexBeforeSlash < 0) {
+                "$SLASH$monthYear"
             } else {
                 val modified = monthYear.replaceRange(indexBeforeSlash, indexBeforeSlash + 1, SLASH).toString()
-                return if (modified == SLASH) {
+                if (modified == SLASH) {
                     ""
                 } else {
                     modified
