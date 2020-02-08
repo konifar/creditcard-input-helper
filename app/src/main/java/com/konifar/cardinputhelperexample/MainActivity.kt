@@ -13,6 +13,7 @@ import io.konifar.cardinputhelper.CardNumberTextWatcher
 import io.konifar.cardinputhelper.cardbrand.*
 import io.konifar.cardinputhelper.ext.digits
 import io.konifar.cardinputhelper.formatter.CardNumberSeparatorType
+import io.konifar.cardinputhelper.validator.CardMonthYearValidator
 import io.konifar.cardinputhelper.validator.CardNumberValidator
 import io.konifar.cardinputhelper.validator.CardSecurityCodeValidator
 import io.konifar.cardinputhelper.validator.errors.CardMonthYearError
@@ -51,6 +52,12 @@ class MainActivity : AppCompatActivity() {
         binding.expiryMonthYearEdit.addTextChangedListener(object : CardMonthYearTextWatcher() {
             override fun onCardMonthYearErrorChanged(error: CardMonthYearError) = bindMonthYearError(error)
         })
+        binding.expiryMonthYearEdit.setOnFocusChangeListener { _, focus ->
+            if (!focus) {
+                val error = CardMonthYearValidator.validateOnFocusChanged(binding.expiryMonthYearEdit.text)
+                bindMonthYearError(error)
+            }
+        }
 
         binding.cvv2Edit.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -135,7 +142,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (errorResId > 0) {
-//            binding.expiryMonthYear.error = getString(errorResId)
+            binding.expiryMonthYear.error = getString(errorResId)
         } else {
             binding.expiryMonthYear.error = null
         }

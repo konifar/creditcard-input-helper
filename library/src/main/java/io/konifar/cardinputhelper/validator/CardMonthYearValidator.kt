@@ -1,37 +1,46 @@
 package io.konifar.cardinputhelper.validator
 
-import io.konifar.cardinputhelper.formatter.CardMonthYearFormatter
+import io.konifar.cardinputhelper.formatter.CardMonthYearFormatter.SLASH
 import io.konifar.cardinputhelper.validator.errors.CardMonthYearError
 import java.util.*
 
 object CardMonthYearValidator {
 
     fun validateOnFocusChanged(monthYear: CharSequence): CardMonthYearError {
-        if (!validateEmpty(monthYear.toString())) return CardMonthYearError.IS_EMPTY
-        return CardMonthYearError.NONE
-    }
+        val monthYearArray = monthYear.split(SLASH)
+        if (monthYearArray.size == 1) {
+            return CardMonthYearError.IS_EMPTY
+        }
 
-    fun validateOnTextChanged(monthYear: CharSequence): CardMonthYearError {
-        if (!validateEmpty(monthYear.toString())) return CardMonthYearError.IS_EMPTY
+        val month = monthYearArray.first()
+        val year = monthYearArray.last()
 
-        checkMonthYear(monthYear.toString())?.let {
+        checkMonthYear(month, year)?.let {
             return it
         }
 
         return CardMonthYearError.NONE
     }
 
-    private fun validateEmpty(monthYear: String) = monthYear.isNotEmpty()
+    fun validateOnTextChanged(monthYear: CharSequence): CardMonthYearError {
+        val monthYearArray = monthYear.split(SLASH)
+        if (monthYearArray.size == 2) {
+            val month = monthYearArray.first()
+            val year = monthYearArray.last()
+            if (month.isNotEmpty() && year.isNotEmpty() && year.length == 2) {
+                checkMonthYear(month, year)?.let {
+                    return it
+                }
+            }
+        }
 
-    private fun checkMonthYear(monthYear: String): CardMonthYearError? {
-        val monthYearArray = monthYear.split(CardMonthYearFormatter.SLASH)
-        if (monthYearArray.isEmpty()) return null
+        return CardMonthYearError.NONE
+    }
 
-        val month = monthYearArray.first()
+    private fun checkMonthYear(month: String, year: String): CardMonthYearError? {
         if (month.isEmpty()) return CardMonthYearError.MONTH_REQUIRED
-        if (month.toInt() > 12) return CardMonthYearError.MONTH_INVALID
+        if (month.toInt() > 12 || month.toInt() <= 0) return CardMonthYearError.MONTH_INVALID
 
-        val year = monthYearArray.last()
         if (year.isEmpty()) return CardMonthYearError.YEAR_REQUIRED
 
         val currentYear = Calendar.getInstance().get(Calendar.YEAR) % 100
