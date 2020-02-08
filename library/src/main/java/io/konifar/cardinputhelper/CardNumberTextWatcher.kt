@@ -5,12 +5,12 @@ import android.text.Selection
 import android.text.TextWatcher
 import io.konifar.cardinputhelper.cardbrand.CardBrand
 import io.konifar.cardinputhelper.formatter.CardNumberFormatter
-import io.konifar.cardinputhelper.formatter.DividerType
+import io.konifar.cardinputhelper.formatter.CardNumberSeparatorType
 import io.konifar.cardinputhelper.validator.errors.CardNumberError
 import io.konifar.cardinputhelper.validator.CardNumberValidator
 
 open class CardNumberTextWatcher(
-    private val dividerType: DividerType = DividerType.SPACE,
+    private val separatorType: CardNumberSeparatorType = CardNumberSeparatorType.SPACE,
     private val supportedCardBrand: Array<CardBrand> = CardBrand.all
 ) : TextWatcher {
 
@@ -54,7 +54,7 @@ open class CardNumberTextWatcher(
 
     private fun formatText(s: Editable) {
         currentCardBrand?.let {
-            val formattedText = CardNumberFormatter.format(s, it, dividerType)
+            val formattedText = CardNumberFormatter.format(s, it, separatorType)
             s.replace(0, s.length, formattedText)
             adjustCursorPos(formattedText, s)
         }
@@ -73,10 +73,10 @@ open class CardNumberTextWatcher(
         if (cursorPos >= formattedTextLength) {
             cursorPos = formattedTextLength
         }
-        if (editVelocity > 0 && cursorPos > 0 && formattedText[cursorPos - 1] == dividerType.character) {
+        if (editVelocity > 0 && cursorPos > 0 && formattedText[cursorPos - 1] == separatorType.character) {
             cursorPos += 1
         }
-        if (editVelocity < 0 && cursorPos > 1 && formattedText[cursorPos - 1] == dividerType.character) {
+        if (editVelocity < 0 && cursorPos > 1 && formattedText[cursorPos - 1] == separatorType.character) {
             cursorPos -= 1
         }
         if (cursorPos != i) {

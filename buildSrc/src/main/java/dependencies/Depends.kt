@@ -16,6 +16,7 @@ object Depends {
         const val testRules = "androidx.test:rules:1.3.0-alpha02"
         const val testCoreKtx = "androidx.test:core-ktx:1.2.1-alpha02"
         const val androidJunit4Ktx = "androidx.test.ext:junit-ktx:1.1.2-alpha02"
+        const val mockitoKotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
     }
 
     object AndroidX {

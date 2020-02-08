@@ -5,7 +5,7 @@ import io.konifar.cardinputhelper.ext.digits
 
 object CardNumberFormatter {
 
-    fun format(cardNumber: CharSequence, cardBrand: CardBrand, dividerType: DividerType): String {
+    fun format(cardNumber: CharSequence, cardBrand: CardBrand, separatorType: CardNumberSeparatorType): String {
         if (!cardBrand.validateFormatSetting()) {
             return cardNumber.toString()
         }
@@ -24,7 +24,7 @@ object CardNumberFormatter {
                 val isEnd = end >= formatLength
                 append(number, start, if (isEnd) formatLength else end)
                 if (!isEnd) {
-                    append(dividerType.character)
+                    append(separatorType.character)
                     start += f
                 } else {
                     break
