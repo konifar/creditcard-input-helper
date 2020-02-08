@@ -156,7 +156,7 @@ object CardMonthYearFormatter {
                 }
             }
 
-            return originalCursorPos + 1
+            return (originalCursorPos + 1).coerceAtMost(formatted.length)
         }
 
         val isDeleted = originalBefore.length > formatted.length

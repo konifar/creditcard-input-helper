@@ -151,6 +151,8 @@ class CardMonthYearFormatterTest {
                     arrayOf("01/23", "01/23", "01/2", 5),
                     arrayOf("01/32", "01/32", "01/2", 4),
                     arrayOf("12/3", "12/3", "1/3", 2),
+                    arrayOf("12/34", "12/34", "12/345", 5),
+                    arrayOf("1/23", "1/23", "1/234", 4),
                     // Deleted slash
                     arrayOf("", "", "/", 0),
                     arrayOf("", "", "0", 0),
