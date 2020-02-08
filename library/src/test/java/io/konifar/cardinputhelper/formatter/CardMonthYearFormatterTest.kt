@@ -30,6 +30,7 @@ class CardMonthYearFormatterTest {
                     arrayOf("12", "12/"),
                     arrayOf("01", "01/"),
                     arrayOf("13", "1/3"),
+                    arrayOf("13/", "1/3"),
                     arrayOf("012", "01/2"),
                     arrayOf("123", "12/3"),
                     arrayOf("234", "2/34"),
@@ -142,13 +143,14 @@ class CardMonthYearFormatterTest {
                     arrayOf("1/", "1//", "1/", 2),
                     arrayOf("1/", "/1/", "1/", 0),
                     arrayOf("1/2", "1/2", "/2", 1),
+                    arrayOf("12/34", "12/34", "2/34", 1),
                     // Inserted year
                     arrayOf("12/3", "12/3", "12/", 4),
                     arrayOf("12/3", "123/", "12/", 4),
                     arrayOf("01/2", "01/2", "01/", 4),
                     arrayOf("01/23", "01/23", "01/2", 5),
                     arrayOf("01/32", "01/32", "01/2", 4),
-                    arrayOf("11/2", "11/2", "1/2", 3),
+                    arrayOf("12/3", "12/3", "1/3", 2),
                     // Deleted slash
                     arrayOf("", "", "/", 0),
                     arrayOf("", "", "0", 0),
@@ -162,7 +164,10 @@ class CardMonthYearFormatterTest {
                     arrayOf("1/3", "1/3", "12/3", 1),
                     arrayOf("1/3", "1/3", "01/3", 0),
                     arrayOf("2/3", "2/3", "12/3", 0),
-                    arrayOf("01/", "01/", "01/3", 3)
+                    arrayOf("01/", "01/", "01/3", 3),
+                    arrayOf("01/3", "01/3", "01/23", 3),
+                    arrayOf("01/2", "01/2", "01/23", 4),
+                    arrayOf("1/3", "123", "12/3", 1)
                 )
             }
         }

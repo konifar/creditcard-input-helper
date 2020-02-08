@@ -10,14 +10,14 @@ import io.konifar.cardinputhelper.validator.errors.CardMonthYearError
 open class CardMonthYearTextWatcher : TextWatcher {
 
     private var isChangingText = false
-    private var beforeTextList = ""
-    private var oldBeforeTextList = ""
+    private var beforeText = ""
+    private var oldBeforeText = ""
 
     open fun onCardMonthYearErrorChanged(error: CardMonthYearError) {}
 
     override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-        oldBeforeTextList = beforeTextList
-        beforeTextList = s.toString()
+        oldBeforeText = beforeText
+        beforeText = s.toString()
     }
 
     override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
@@ -27,7 +27,7 @@ open class CardMonthYearTextWatcher : TextWatcher {
             isChangingText = true
 
             val formattedText = if (isDeleted(s)) {
-                CardMonthYearFormatter.formatForDeleting(s, beforeTextList)
+                CardMonthYearFormatter.formatForDeleting(s, beforeText)
             } else {
                 CardMonthYearFormatter.formatForInserting(s)
             }
@@ -36,12 +36,12 @@ open class CardMonthYearTextWatcher : TextWatcher {
             val error = CardMonthYearValidator.validateOnTextChanged(formattedText)
             onCardMonthYearErrorChanged(error)
 
-            val cursorPos = CardMonthYearFormatter.calculateCursorPos(formattedText, beforeTextList, oldBeforeTextList)
+            val cursorPos = CardMonthYearFormatter.calculateCursorPos(formattedText, beforeText, oldBeforeText)
             Selection.setSelection(s, cursorPos)
 
             isChangingText = false
         }
     }
 
-    private fun isDeleted(s: CharSequence) = s.length < beforeTextList.length
+    private fun isDeleted(s: CharSequence) = s.length < beforeText.length
 }

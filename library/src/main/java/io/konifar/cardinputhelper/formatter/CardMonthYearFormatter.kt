@@ -60,8 +60,10 @@ object CardMonthYearFormatter {
                             "$month$SLASH${year.substring(0, yearEndIndex)}"
                         } else {
                             val modifiedMonth = month.substring(0, 1)
-                            val yearEndIndex = year.length.coerceAtMost(2)
-                            "$modifiedMonth$SLASH${year.substring(0, yearEndIndex)}"
+                            val extraMonth = month.substring(1, 2)
+                            val modifiedYear = if (year.isEmpty()) extraMonth else year
+                            val yearEndIndex = modifiedYear.length.coerceAtMost(2)
+                            "$modifiedMonth$SLASH${modifiedYear.substring(0, yearEndIndex)}"
                         }
                     }
                     else -> {
@@ -139,32 +141,31 @@ object CardMonthYearFormatter {
             val isMonthInserted = originalCursorPos < originalSlashPos
             val month = originalAfter.split(SLASH).first()
             if (isMonthInserted) {
-                if (month.toInt() <= 12) {
-                    if (month == "0" || month == "1") {
-                        return formatted.indexOf(SLASH)
+                val year = originalAfter.split(SLASH).last()
+                if (year.isEmpty()) {
+                    if (month.toInt() <= 12) {
+                        if (month == "0" || month == "1") {
+                            return formatted.indexOf(SLASH)
+                        }
+                        return formatted.indexOf(SLASH) + 1
+                    } else {
+                        return formatted.indexOf(SLASH) + 2
                     }
-                    return formatted.indexOf(SLASH) + 1
                 } else {
-                    return formatted.indexOf(SLASH) + 2
+                    return originalCursorPos + 1
                 }
             }
 
             return originalCursorPos + 1
         }
 
-        val isDeleted = originalBefore.length > originalAfter.length
-        val isSlashDeleted = originalAfter.contains(SLASH) && !formatted.contains(SLASH)
+        val isDeleted = originalBefore.length > formatted.length
         if (isDeleted) {
-            if (isSlashDeleted) {
-                return 0
+            val isSlashModified = !originalAfter.contains(SLASH) && formatted.contains(SLASH)
+            if (isSlashModified) {
+                return formatted.indexOf(SLASH)
             }
-            val originalSlashPos = originalBefore.indexOf(SLASH)
-            val isYearDeleted = originalSlashPos in 1..originalCursorPos
-            return if (isYearDeleted) {
-                originalCursorPos + 1
-            } else {
-                originalCursorPos
-            }
+            return originalCursorPos
         }
 
         return formatted.length
@@ -177,7 +178,7 @@ object CardMonthYearFormatter {
                     return idx
                 }
             }
-            return originalAfter.length - 1
+            return originalAfter.length
         } else {
             for ((idx, c) in originalBefore.withIndex()) {
                 if (c != originalAfter[idx]) {
