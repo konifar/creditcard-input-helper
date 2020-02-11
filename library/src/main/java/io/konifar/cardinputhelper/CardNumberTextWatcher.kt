@@ -1,17 +1,19 @@
 package io.konifar.cardinputhelper
 
+import android.os.Handler
 import android.text.Editable
 import android.text.Selection
 import android.text.TextWatcher
 import io.konifar.cardinputhelper.cardbrand.CardBrand
 import io.konifar.cardinputhelper.formatter.CardNumberFormatter
 import io.konifar.cardinputhelper.formatter.CardNumberSeparatorType
-import io.konifar.cardinputhelper.validator.errors.CardNumberError
 import io.konifar.cardinputhelper.validator.CardNumberValidator
+import io.konifar.cardinputhelper.validator.errors.CardNumberError
 
 open class CardNumberTextWatcher(
     private val separatorType: CardNumberSeparatorType = CardNumberSeparatorType.SPACE,
-    private val supportedCardBrand: Array<CardBrand> = CardBrand.all
+    private val supportedCardBrand: Array<CardBrand> = CardBrand.all,
+    private val completedCheckDelayMills: Long = 1000L
 ) : TextWatcher {
 
     private var isChangingText = false
@@ -20,9 +22,18 @@ open class CardNumberTextWatcher(
 
     private var currentCardBrand: CardBrand? = null
 
+    private val handler = Handler()
+    private val runnable = Runnable {
+        currentCardBrand?.let {
+            onCardNumberCompleted(it)
+        }
+    }
+
     open fun onCardBrandChanged(cardBrand: CardBrand) {}
 
     open fun onCardNumberErrorChanged(error: CardNumberError) {}
+
+    open fun onCardNumberCompleted(cardBrand: CardBrand) {}
 
     override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
@@ -47,6 +58,7 @@ open class CardNumberTextWatcher(
 
             formatText(s)
             validateText(s)
+            checkEditCompleted(s)
 
             isChangingText = false
         }
@@ -64,6 +76,16 @@ open class CardNumberTextWatcher(
         currentCardBrand?.let {
             val error = CardNumberValidator.validateOnTextChanged(s, it)
             onCardNumberErrorChanged(error)
+        }
+    }
+
+    private fun checkEditCompleted(s: Editable) {
+        handler.removeCallbacks(runnable)
+        currentCardBrand?.let {
+            val error = CardNumberValidator.validateOnFocusChanged(s, it)
+            if (error == CardNumberError.NONE) {
+                handler.postDelayed(runnable, completedCheckDelayMills)
+            }
         }
     }
 
