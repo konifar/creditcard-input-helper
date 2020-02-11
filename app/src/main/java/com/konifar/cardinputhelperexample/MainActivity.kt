@@ -10,6 +10,7 @@ import com.konifar.cardinputhelper.R
 import com.konifar.cardinputhelper.databinding.MainActivityBinding
 import io.konifar.cardinputhelper.CardMonthYearTextWatcher
 import io.konifar.cardinputhelper.CardNumberTextWatcher
+import io.konifar.cardinputhelper.NoCopyAndCutSelectionActionModeCallback
 import io.konifar.cardinputhelper.cardbrand.*
 import io.konifar.cardinputhelper.ext.digits
 import io.konifar.cardinputhelper.formatter.CardNumberSeparatorType
@@ -48,6 +49,8 @@ class MainActivity : AppCompatActivity() {
 
             override fun onCardNumberErrorChanged(error: CardNumberError) = bindNumberError(error)
         })
+
+        binding.panEdit.customSelectionActionModeCallback = NoCopyAndCutSelectionActionModeCallback()
 
         binding.expiryMonthYearEdit.addTextChangedListener(object : CardMonthYearTextWatcher() {
             override fun onCardMonthYearErrorChanged(error: CardMonthYearError) = bindMonthYearError(error)
