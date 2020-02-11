@@ -7,7 +7,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 
 @RunWith(Enclosed::class)
-class DinersTest {
+class DiscoverTest {
 
     @RunWith(Parameterized::class)
     class BrandPattern(
@@ -21,32 +21,21 @@ class DinersTest {
             fun data(): List<Array<out Any?>> {
                 return listOf(
                     arrayOf("", false),
-                    arrayOf("3", false),
-                    arrayOf("30", false),
-                    arrayOf("300", false),
-                    arrayOf("3001", true),
-                    arrayOf("3101", false),
-                    arrayOf("3020", true),
-                    arrayOf("3030", true),
-                    arrayOf("3040", true),
-                    arrayOf("3050", true),
-                    arrayOf("3060", false),
-                    arrayOf("30600", false),
-                    arrayOf("3085", false),
-                    arrayOf("3095", true),
-                    arrayOf("3096", false),
-                    arrayOf("3094", false),
-                    arrayOf("3601", true),
-                    arrayOf("3701", false),
-                    arrayOf("3801", true),
-                    arrayOf("3901", true)
+                    arrayOf("6", false),
+                    arrayOf("60", false),
+                    arrayOf("601", false),
+                    arrayOf("6011", true),
+                    arrayOf("6012", false),
+                    arrayOf("6500", true),
+                    arrayOf("6600", false),
+                    arrayOf("6400", false)
                 )
             }
         }
 
         @Test
         fun brandPattern() {
-            val actual = Diners().brandPattern.matcher(input).matches()
+            val actual = Discover().brandPattern.matcher(input).matches()
             assertEquals(output, actual)
         }
     }
@@ -63,18 +52,18 @@ class DinersTest {
             fun data(): List<Array<out Any?>> {
                 return listOf(
                     arrayOf("", false),
-                    arrayOf("3001234567890", false),
-                    arrayOf("300123456789012", false),
-                    arrayOf("30012345678901", true),
-                    arrayOf("30952345678901", true),
-                    arrayOf("30752345678901", false)
+                    arrayOf("601123456789012", false),
+                    arrayOf("60112345678901234", false),
+                    arrayOf("6011234567890123", true),
+                    arrayOf("6500234567890123", true),
+                    arrayOf("6600234567890123", false)
                 )
             }
         }
 
         @Test
         fun brandPattern() {
-            val actual = Diners().verifyPattern.matcher(input).matches()
+            val actual = Discover().verifyPattern.matcher(input).matches()
             assertEquals(output, actual)
         }
     }
@@ -82,18 +71,19 @@ class DinersTest {
     class Format {
         @Test
         fun format() {
-            val format = Diners().format
-            assertEquals(3, format.size)
+            val format = Discover().format
+            assertEquals(4, format.size)
             assertEquals(4, format[0])
-            assertEquals(6, format[1])
+            assertEquals(4, format[1])
             assertEquals(4, format[2])
+            assertEquals(4, format[3])
         }
     }
 
     class SecurityCode {
         @Test
         fun securityCodeLength() {
-            assertEquals(3, Diners().securityCodeLength)
+            assertEquals(3, Discover().securityCodeLength)
         }
     }
 }
