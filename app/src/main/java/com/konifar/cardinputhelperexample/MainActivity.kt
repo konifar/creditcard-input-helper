@@ -38,27 +38,47 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.panEdit.addTextChangedListener(object : CardNumberTextWatcher(
-            separatorType = CardNumberSeparatorType.HYPHEN,
-            supportedCardBrand = SUPPORTED_CARD_BRANDS
-        ) {
-            override fun onCardBrandChanged(cardBrand: CardBrand) {
-                bindBrandName(cardBrand)
-                clearCvv2(cardBrand)
+
+        binding.panEdit.apply {
+            addTextChangedListener(object : CardNumberTextWatcher(
+                separatorType = CardNumberSeparatorType.HYPHEN,
+                supportedCardBrand = SUPPORTED_CARD_BRANDS
+            ) {
+                override fun onCardBrandChanged(cardBrand: CardBrand) {
+                    bindBrandName(cardBrand)
+                    clearCvv2(cardBrand)
+                }
+
+                override fun onCardNumberErrorChanged(error: CardNumberError) = bindNumberError(error)
+
+                override fun onCardNumberCompleted(cardBrand: CardBrand) {
+                    binding.expiryMonthYearEdit.requestFocus()
+                }
+            })
+            setOnFocusChangeListener { _, focus ->
+                if (!focus) {
+                    val brand = CardBrand.from(binding.panEdit.text, SUPPORTED_CARD_BRANDS)
+                    val error = CardNumberValidator.validateOnFocusChanged(binding.panEdit.text, brand)
+                    bindNumberError(error)
+                }
             }
 
-            override fun onCardNumberErrorChanged(error: CardNumberError) = bindNumberError(error)
-        })
+            customSelectionActionModeCallback = NoCopyAndCutSelectionActionModeCallback()
+        }
 
-        binding.panEdit.customSelectionActionModeCallback = NoCopyAndCutSelectionActionModeCallback()
+        binding.expiryMonthYearEdit.apply {
+            addTextChangedListener(object : CardMonthYearTextWatcher() {
+                override fun onCardMonthYearErrorChanged(error: CardMonthYearError) = bindMonthYearError(error)
 
-        binding.expiryMonthYearEdit.addTextChangedListener(object : CardMonthYearTextWatcher() {
-            override fun onCardMonthYearErrorChanged(error: CardMonthYearError) = bindMonthYearError(error)
-        })
-        binding.expiryMonthYearEdit.setOnFocusChangeListener { _, focus ->
-            if (!focus) {
-                val error = CardMonthYearValidator.validateOnFocusChanged(binding.expiryMonthYearEdit.text)
-                bindMonthYearError(error)
+                override fun onCardMonthYearCompleted() {
+                    binding.cvv2Edit.requestFocus()
+                }
+            })
+            setOnFocusChangeListener { _, focus ->
+                if (!focus) {
+                    val error = CardMonthYearValidator.validateOnFocusChanged(binding.expiryMonthYearEdit.text)
+                    bindMonthYearError(error)
+                }
             }
         }
 

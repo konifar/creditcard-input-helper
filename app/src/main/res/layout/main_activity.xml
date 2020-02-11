@@ -58,32 +58,9 @@
                         style="@style/CardEditText.Number"
                         android:autofillHints="creditCardNumber"
                         android:hint="@string/pan_hint"
-                        android:maxLength="19" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <!-- Name -->
-                <TextView
-                    android:id="@+id/name_label"
-                    style="@style/CardLabelText"
-                    android:layout_marginTop="@dimen/space_16dp"
-                    android:text="@string/holder_name"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/pan" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/name"
-                    style="@style/CardTextInput"
-                    android:layout_marginTop="@dimen/space_8dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/name_label">
-
-                    <EditText
-                        style="@style/CardEditText"
-                        android:hint="@string/holder_name_hint"
-                        android:inputType="textPersonName"
-                        android:textAllCaps="true" />
+                        android:imeOptions="actionNext"
+                        android:maxLength="19"
+                        android:nextFocusForward="@id/expiry_month_year_edit" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -94,7 +71,7 @@
                     android:layout_marginTop="@dimen/space_16dp"
                     android:text="@string/expiry_month_year"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/name" />
+                    app:layout_constraintTop_toBottomOf="@id/pan" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/expiry_month_year"
@@ -109,7 +86,9 @@
                         style="@style/CardEditText.Number"
                         android:autofillHints="creditCardExpirationMonth"
                         android:hint="@string/expiry_month_year_hint"
-                        android:maxLength="5" />
+                        android:imeOptions="actionNext"
+                        android:maxLength="5"
+                        android:nextFocusForward="@id/cvv2_edit" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -135,7 +114,9 @@
                         android:layout_width="120dp"
                         android:autofillHints="creditCardSecurityCode"
                         android:hint="@string/cvv2_hint"
-                        android:maxLength="4" />
+                        android:imeOptions="actionDone"
+                        android:maxLength="4"
+                        android:nextFocusForward="@id/check" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
