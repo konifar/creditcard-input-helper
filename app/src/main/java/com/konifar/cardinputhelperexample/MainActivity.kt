@@ -82,22 +82,30 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.cvv2Edit.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+        binding.cvv2Edit.apply {
+            addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable) {
+                    bindCvv2Error(CardSecurityCodeError.NONE)
+                }
 
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
-            override fun afterTextChanged(s: Editable) {
-                val brand = CardBrand.from(binding.panEdit.text, SUPPORTED_CARD_BRANDS)
-                if (brand.hasEnoughSecurityCodeLength(binding.cvv2Edit.text)) {
-                    binding.cvv2.error = null
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            })
+            setOnFocusChangeListener { _, focus ->
+                if (!focus) {
+                    val brand = CardBrand.from(binding.panEdit.text, SUPPORTED_CARD_BRANDS)
+                    val error = CardSecurityCodeValidator.validateOnFocusChanged(binding.cvv2Edit.text, brand)
+                    bindSecurityCodeError(error)
                 }
             }
-        })
+        }
 
         binding.check.setOnClickListener {
             validateNumber()
+            validateMonthYear()
             validateCvv2()
+            focusErrorEditText()
         }
     }
 
@@ -128,6 +136,11 @@ class MainActivity : AppCompatActivity() {
         } else {
             binding.cvv2.error = null
         }
+    }
+
+    private fun validateMonthYear() {
+        val error = CardMonthYearValidator.validateOnFocusChanged(binding.expiryMonthYearEdit.text)
+        bindMonthYearError(error)
     }
 
     private fun validateNumber() {
@@ -171,6 +184,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun bindSecurityCodeError(error: CardSecurityCodeError) {
+        val errorResId = when (error) {
+            CardSecurityCodeError.IS_EMPTY -> R.string.cvv2_error_is_empty
+            CardSecurityCodeError.NOT_ENOUGH_LENGTH -> R.string.cvv2_error_not_enough_length
+            else -> 0
+        }
+
+        if (errorResId > 0) {
+            binding.cvv2.error = getString(errorResId)
+        } else {
+            binding.cvv2.error = null
+        }
+    }
+
     private fun bindBrandName(cardType: CardBrand) {
         val brandName = when (cardType) {
             is Amex -> "American Express"
@@ -183,5 +210,20 @@ class MainActivity : AppCompatActivity() {
             else -> "Unsupported"
         }
         binding.brandName.text = brandName
+    }
+
+    private fun focusErrorEditText() {
+        if (binding.pan.error != null) {
+            binding.pan.editText?.requestFocus()
+            return
+        }
+        if (binding.expiryMonthYear.error != null) {
+            binding.expiryMonthYear.editText?.requestFocus()
+            return
+        }
+        if (binding.cvv2.error != null) {
+            binding.cvv2.editText?.requestFocus()
+            return
+        }
     }
 }
