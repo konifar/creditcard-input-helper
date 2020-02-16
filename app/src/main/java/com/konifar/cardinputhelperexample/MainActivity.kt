@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter.LengthFilter
 import android.text.TextWatcher
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.konifar.cardinputhelper.R
@@ -105,7 +106,10 @@ class MainActivity : AppCompatActivity() {
             validateNumber()
             validateMonthYear()
             validateCvv2()
-            focusErrorEditText()
+            val hasError = focusErrorEditText()
+            if (!hasError) {
+                Toast.makeText(this, R.string.no_error_message, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -126,7 +130,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun bindCvv2Error(error: CardSecurityCodeError) {
         val errorResId = when (error) {
-            CardSecurityCodeError.EMPTY -> R.string.cvv2_error_is_empty
+            CardSecurityCodeError.EMPTY -> R.string.cvv2_error_empty
             CardSecurityCodeError.NOT_ENOUGH_LENGTH -> R.string.cvv2_error_not_enough_length
             else -> 0
         }
@@ -153,7 +157,7 @@ class MainActivity : AppCompatActivity() {
         val errorResId = when (error) {
             CardNumberError.INVALID_BRAND_FORMAT -> R.string.number_error_invalid_brand_format
             CardNumberError.INVALID_CARD_NUMBER -> R.string.number_error_invalid_card_number
-            CardNumberError.EMPTY -> R.string.number_error_is_empty
+            CardNumberError.EMPTY -> R.string.number_error_empty
             CardNumberError.UNSUPPORTED_BRAND -> R.string.number_error_unsupported_brand
             CardNumberError.NOT_ENOUGH_LENGTH -> R.string.number_error_not_enough_length
             else -> 0
@@ -173,7 +177,7 @@ class MainActivity : AppCompatActivity() {
             CardMonthYearError.YEAR_REQUIRED -> R.string.month_year_error_year_required
             CardMonthYearError.MONTH_INVALID -> R.string.month_year_error_month_invalid
             CardMonthYearError.MONTH_REQUIRED -> R.string.month_year_error_month_required
-            CardMonthYearError.EMPTY -> R.string.month_year_error_is_empty
+            CardMonthYearError.EMPTY -> R.string.month_year_error_empty
             else -> 0
         }
 
@@ -186,7 +190,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun bindSecurityCodeError(error: CardSecurityCodeError) {
         val errorResId = when (error) {
-            CardSecurityCodeError.EMPTY -> R.string.cvv2_error_is_empty
+            CardSecurityCodeError.EMPTY -> R.string.cvv2_error_empty
             CardSecurityCodeError.NOT_ENOUGH_LENGTH -> R.string.cvv2_error_not_enough_length
             else -> 0
         }
@@ -212,18 +216,20 @@ class MainActivity : AppCompatActivity() {
         binding.brandName.text = brandName
     }
 
-    private fun focusErrorEditText() {
+    private fun focusErrorEditText(): Boolean {
         if (binding.pan.error != null) {
             binding.pan.editText?.requestFocus()
-            return
+            return true
         }
         if (binding.expiryMonthYear.error != null) {
             binding.expiryMonthYear.editText?.requestFocus()
-            return
+            return true
         }
         if (binding.cvv2.error != null) {
             binding.cvv2.editText?.requestFocus()
-            return
+            return true
         }
+
+        return false
     }
 }

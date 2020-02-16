@@ -10,7 +10,7 @@
     </style>
 
     <style name="Toolbar.Back">
-        <item name="navigationIcon">@drawable/ic_arrow_back_white_24dp</item>
+        <item name="navigationIcon">@drawable/ic_arrow_back_24dp</item>
     </style>
 
     <style name="CardLabelText">
@@ -47,5 +47,4 @@
     <style name="CardEditText.Number">
         <item name="android:inputType">phone</item>
     </style>
-
 </resources>
