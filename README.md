@@ -31,9 +31,13 @@ dependencies {
 
 ## Features
 
-### CardNumberTextWatcher
+1. CardNumberTextWatcher
+2. CardMonthYearTextWatcher
+3. NoCopyAndCutSelectionActionModeCallback
 
-TextWatcher to format and validate card number according to the card brand.
+### 1. CardNumberTextWatcher
+
+Simple TextWatcher class to format and validate card number according to the card brand.
 
 ![number_format.gif](art/number_format.gif)
 
@@ -79,9 +83,9 @@ Unsupported brand | Number matches brand but it's not supported for the app
 Invalid brand format | Number doesn't match brand prefix
 Invalid card number | Number is invalid as Luhn algorithm
 
-### CardMonthYearTextWatcher
+### 2. CardMonthYearTextWatcher
 
-TextWatcher to format and validate month/year.
+Simple TextWatcher class to format and validate month/year.
 
 ![month_year_format.gif](art/month_year_format.gif)
 
@@ -108,9 +112,9 @@ Year required | Year is empty
 Year invalid | Year is invalid like `00`, `99` (more than 20 years later)
 Expired | Month/Year is expired
 
-### NoCopyAndCutSelectionActionModeCallback
+### 3. NoCopyAndCutSelectionActionModeCallback
 
-Remove copy and cut option menu.
+Simple ActionModeCallback class to remove copy and cut option menu.
 
 Before | After
 :--: | :--:
