@@ -7,10 +7,7 @@ import io.konifar.cardinputhelper.validator.errors.CardNumberError
 
 object CardNumberValidator {
 
-    fun validateOnFocusChanged(
-        cardNumber: CharSequence,
-        supportedCardBrand: Array<CardBrand>
-    ): CardNumberError {
+    fun validateOnFocusChanged(cardNumber: CharSequence, supportedCardBrand: Array<CardBrand>): CardNumberError {
         val cardBrand = CardBrand.from(cardNumber, supportedCardBrand)
         return validateOnFocusChanged(cardNumber, cardBrand)
     }
@@ -21,7 +18,7 @@ object CardNumberValidator {
         if (!validateLength(number, cardBrand)) return CardNumberError.NOT_ENOUGH_LENGTH
         if (!validateSupportedBrand(cardBrand)) return CardNumberError.UNSUPPORTED_BRAND
         if (!validateBrandFormat(number, cardBrand)) return CardNumberError.INVALID_BRAND_FORMAT
-        if (!validateLuhnAlgorithem(number)) return CardNumberError.INVALID_CARD_NUMBER
+        if (!validateLuhnAlgorithm(number)) return CardNumberError.INVALID_CARD_NUMBER
         return CardNumberError.NONE
     }
 
@@ -30,20 +27,18 @@ object CardNumberValidator {
         if (cardBrand.hasEnoughNumberLength(cardNumber)) {
             if (!validateSupportedBrand(cardBrand)) return CardNumberError.UNSUPPORTED_BRAND
             if (!validateBrandFormat(number, cardBrand)) return CardNumberError.INVALID_BRAND_FORMAT
-            if (!validateLuhnAlgorithem(number)) return CardNumberError.INVALID_CARD_NUMBER
+            if (!validateLuhnAlgorithm(number)) return CardNumberError.INVALID_CARD_NUMBER
         }
         return CardNumberError.NONE
     }
 
-    private fun validateLuhnAlgorithem(number: String) = LuhnAlgorithm.isValid(number)
+    private fun validateLuhnAlgorithm(number: String) = LuhnAlgorithm.isValid(number)
 
-    private fun validateLength(number: String, cardBrand: CardBrand) =
-        cardBrand.hasEnoughNumberLength(number)
+    private fun validateLength(number: String, cardBrand: CardBrand) = cardBrand.hasEnoughNumberLength(number)
 
     private fun validateEmpty(number: String) = number.isNotEmpty()
 
-    private fun validateSupportedBrand(cardBrand: CardBrand) = !(cardBrand is UnSupported)
+    private fun validateSupportedBrand(cardBrand: CardBrand) = cardBrand !is UnSupported
 
-    private fun validateBrandFormat(number: String, cardBrand: CardBrand) =
-        cardBrand.isValidFormat(number)
+    private fun validateBrandFormat(number: String, cardBrand: CardBrand) = cardBrand.isValidFormat(number)
 }
