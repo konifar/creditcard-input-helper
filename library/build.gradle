@@ -43,4 +43,5 @@ dependencies {
     testImplementation Depends.Test.testCoreKtx
     testImplementation Depends.Test.androidJunit4Ktx
     testImplementation Depends.Test.mockitoKotlin
+    testImplementation Depends.Test.robolectric
 }
