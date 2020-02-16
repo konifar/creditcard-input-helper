@@ -31,6 +31,10 @@ dependencies {
 
 ## Features
 
+1. CardNumberTextWatcher
+2. CardMonthYearTextWatcher
+3. NoCopyAndCutSelectionActionModeCallback
+
 ### 1. CardNumberTextWatcher
 
 Simple TextWatcher class to format and validate card number according to the card brand.
