@@ -7,7 +7,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 
 @RunWith(Enclosed::class)
-class UnCheckedTest {
+class UncheckedTest {
 
     @RunWith(Parameterized::class)
     class BrandPattern(
@@ -32,7 +32,7 @@ class UnCheckedTest {
 
         @Test
         fun brandPattern() {
-            val actual = UnChecked().brandPattern.matcher(input).matches()
+            val actual = Unchecked().brandPattern.matcher(input).matches()
             assertEquals(output, actual)
         }
     }
@@ -58,7 +58,7 @@ class UnCheckedTest {
 
         @Test
         fun brandPattern() {
-            val actual = UnChecked().verifyPattern.matcher(input).matches()
+            val actual = Unchecked().verifyPattern.matcher(input).matches()
             assertEquals(output, actual)
         }
     }
@@ -66,7 +66,7 @@ class UnCheckedTest {
     class Format {
         @Test
         fun format() {
-            val format = UnChecked().format
+            val format = Unchecked().format
             assertEquals(4, format.size)
             assertEquals(4, format[0])
             assertEquals(4, format[1])
@@ -78,7 +78,7 @@ class UnCheckedTest {
     class SecurityCode {
         @Test
         fun securityCodeLength() {
-            assertEquals(3, UnChecked().securityCodeLength)
+            assertEquals(3, Unchecked().securityCodeLength)
         }
     }
 }

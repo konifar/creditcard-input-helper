@@ -206,7 +206,7 @@ class MainActivity : AppCompatActivity() {
             is Jcb -> "JCB"
             is Mastercard -> "Mastercard"
             is Visa -> "Visa"
-            is UnChecked -> ""
+            is Unchecked -> ""
             else -> "Unsupported"
         }
         binding.brandName.text = brandName
