@@ -27,7 +27,7 @@ interface CardBrand {
                 }
                 return UnSupported()
             }
-            return Unchecked()
+            return UnChecked()
         }
     }
 
