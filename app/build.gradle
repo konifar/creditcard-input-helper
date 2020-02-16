@@ -81,24 +81,9 @@ dependencies {
     implementation Depends.AndroidX.appCompat
     implementation Depends.AndroidX.design
     implementation Depends.AndroidX.constraint
-    implementation Depends.AndroidX.coreKtx
-    implementation Depends.AndroidX.activityKtx
-    implementation Depends.AndroidX.fragmentKtx
     implementation Depends.AndroidX.DataBinding.common
     implementation Depends.AndroidX.DataBinding.runtime
-    implementation Depends.AndroidX.Lifecycle.liveData
-    implementation Depends.AndroidX.Lifecycle.liveDataCoreKtx
-    implementation Depends.AndroidX.Lifecycle.liveDataKtx
-    implementation Depends.AndroidX.Lifecycle.extension
-    implementation Depends.AndroidX.Lifecycle.viewModel
 
     // Debug
     implementation Depends.Timber.core
-
-    // Test
-    testImplementation Depends.Test.junit
-    testImplementation Depends.Test.testRunner
-    testImplementation Depends.Test.testRules
-    testImplementation Depends.Test.testCoreKtx
-    androidTestImplementation Depends.Test.androidJunit4Ktx
 }

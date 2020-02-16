@@ -19,7 +19,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -32,16 +32,7 @@ android {
 dependencies {
     implementation Depends.Kotlin.stdlib
 
-    // AndroidX
-    implementation Depends.AndroidX.appCompat
-    implementation Depends.AndroidX.coreKtx
-
     // Test
     testImplementation Depends.Test.junit
-    testImplementation Depends.Test.testRunner
-    testImplementation Depends.Test.testRules
-    testImplementation Depends.Test.testCoreKtx
-    testImplementation Depends.Test.androidJunit4Ktx
-    testImplementation Depends.Test.mockitoKotlin
     testImplementation Depends.Test.robolectric
 }

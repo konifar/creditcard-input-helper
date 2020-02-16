@@ -3,7 +3,6 @@ package io.konifar.cardinputhelper
 import android.view.ActionMode
 import android.view.Menu
 import android.view.MenuItem
-import androidx.annotation.IdRes
 
 class NoCopyAndCutSelectionActionModeCallback : ActionMode.Callback {
     override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
@@ -12,7 +11,7 @@ class NoCopyAndCutSelectionActionModeCallback : ActionMode.Callback {
         return true
     }
 
-    private fun removeItemIfNeed(menu: Menu?, @IdRes id: Int) {
+    private fun removeItemIfNeed(menu: Menu?, id: Int) {
         if (menu?.findItem(id) != null) {
             menu.removeItem(id)
         }
