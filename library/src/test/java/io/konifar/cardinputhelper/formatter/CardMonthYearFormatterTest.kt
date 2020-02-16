@@ -10,7 +10,7 @@ import org.junit.runners.Parameterized
 class CardMonthYearFormatterTest {
 
     @RunWith(Parameterized::class)
-    class ForInserting(
+    class ForInsert(
         private val input: String,
         private val output: String
     ) {
@@ -78,13 +78,13 @@ class CardMonthYearFormatterTest {
         }
 
         @Test
-        fun formatForInserting() {
-            assertEquals(output, CardMonthYearFormatter.formatForInserting(input))
+        fun formatForInsert() {
+            assertEquals(output, CardMonthYearFormatter.formatForInsert(input))
         }
     }
 
     @RunWith(Parameterized::class)
-    class ForDeleting(
+    class ForDelete(
         private val inputAfter: String,
         private val inputBefore: String,
         private val output: String
@@ -115,8 +115,8 @@ class CardMonthYearFormatterTest {
         }
 
         @Test
-        fun formatForInserting() {
-            assertEquals(output, CardMonthYearFormatter.formatForDeleting(inputAfter, inputBefore))
+        fun formatForDelete() {
+            assertEquals(output, CardMonthYearFormatter.formatForDelete(inputAfter, inputBefore))
         }
     }
 

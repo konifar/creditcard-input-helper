@@ -13,9 +13,9 @@ class CardNumber4digitsFormatTextWatcher : TextWatcher {
 
     override fun afterTextChanged(s: Editable) {
         if (s.toString() != current) {
-            val userInput = s.toString().replace(nonDigits, "")
-            if (userInput.length <= 16) {
-                current = userInput.chunked(4).joinToString(" ")
+            val input = s.toString().replace(nonDigits, "")
+            if (input.length <= 16) {
+                current = input.chunked(4).joinToString(" ")
                 s.filters = arrayOfNulls<InputFilter>(0)
             }
             s.replace(0, s.length, current, 0, current.length)

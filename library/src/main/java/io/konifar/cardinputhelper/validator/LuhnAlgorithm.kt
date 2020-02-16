@@ -19,13 +19,11 @@ object LuhnAlgorithm {
 
     private fun checkSum(input: String) = addEnds(input).sum()
 
-    private fun addEnds(input: String) = input.digits().mapIndexed { i, j ->
+    private fun addEnds(input: String) = input.map(Character::getNumericValue).mapIndexed { i, j ->
         when {
             (input.length - i + 1) % 2 == 0 -> j
             j >= 5 -> j * 2 - 9
             else -> j * 2
         }
     }
-
-    private fun String.digits() = this.map(Character::getNumericValue)
 }

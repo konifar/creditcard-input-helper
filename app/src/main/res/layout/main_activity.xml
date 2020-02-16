@@ -84,7 +84,7 @@
                     <EditText
                         android:id="@+id/expiry_month_year_edit"
                         style="@style/CardEditText.Number"
-                        android:autofillHints="creditCardExpirationMonth"
+                        android:autofillHints="creditCardExpirationMonth|creditCardExpirationYear"
                         android:hint="@string/expiry_month_year_hint"
                         android:imeOptions="actionNext"
                         android:maxLength="5"

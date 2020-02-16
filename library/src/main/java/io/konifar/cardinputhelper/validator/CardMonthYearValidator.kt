@@ -9,7 +9,7 @@ object CardMonthYearValidator {
     fun validateOnFocusChanged(monthYear: CharSequence): CardMonthYearError {
         val monthYearArray = monthYear.split(SLASH)
         if (monthYearArray.size == 1) {
-            return CardMonthYearError.IS_EMPTY
+            return CardMonthYearError.EMPTY
         }
 
         val month = monthYearArray.first()

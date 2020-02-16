@@ -15,7 +15,7 @@ object CardSecurityCodeValidator {
     }
 
     fun validateOnFocusChanged(code: CharSequence, cardBrand: CardBrand): CardSecurityCodeError {
-        if (!validateEmpty(code.toString())) return CardSecurityCodeError.IS_EMPTY
+        if (!validateEmpty(code.toString())) return CardSecurityCodeError.EMPTY
         if (!validateLength(code.toString(), cardBrand)) return CardSecurityCodeError.NOT_ENOUGH_LENGTH
         return CardSecurityCodeError.NONE
     }

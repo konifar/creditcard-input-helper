@@ -17,12 +17,12 @@ interface CardBrand {
             Jcb()
         )
 
-        fun from(cardNumber: CharSequence, supportedCardType: Array<CardBrand>): CardBrand {
+        fun from(cardNumber: CharSequence, supportedCardBrand: Array<CardBrand>): CardBrand {
             val number = cardNumber.digits()
             if (number.length >= MIN_CARD_CHECK_LENGTH) {
-                for (cardType in supportedCardType) {
-                    if (cardType.matchBrand(number)) {
-                        return cardType
+                for (cardBrand in supportedCardBrand) {
+                    if (cardBrand.matchBrand(number)) {
+                        return cardBrand
                     }
                 }
                 return UnSupported()
@@ -37,12 +37,10 @@ interface CardBrand {
     val securityCodeLength: Int
 
     fun matchBrand(cardNumber: CharSequence): Boolean {
-        return brandPattern.matcher(
-            cardNumber.subSequence(
-                0,
-                MIN_CARD_CHECK_LENGTH
-            )
-        ).matches()
+        if (cardNumber.length < MIN_CARD_CHECK_LENGTH) {
+            return false
+        }
+        return brandPattern.matcher(cardNumber.subSequence(0, MIN_CARD_CHECK_LENGTH)).matches()
     }
 
     fun validateFormatSetting(): Boolean {
@@ -71,5 +69,5 @@ interface CardBrand {
 
     fun hasEnoughSecurityCodeLength(code: CharSequence) = code.length >= securityCodeLength
 
-    fun isValidFormat(number: CharSequence) = verifyPattern.matcher(number).matches()
+    fun isValidFormat(number: CharSequence) = verifyPattern.matcher(number.digits()).matches()
 }

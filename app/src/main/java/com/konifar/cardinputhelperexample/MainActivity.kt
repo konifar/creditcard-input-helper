@@ -126,7 +126,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun bindCvv2Error(error: CardSecurityCodeError) {
         val errorResId = when (error) {
-            CardSecurityCodeError.IS_EMPTY -> R.string.cvv2_error_is_empty
+            CardSecurityCodeError.EMPTY -> R.string.cvv2_error_is_empty
             CardSecurityCodeError.NOT_ENOUGH_LENGTH -> R.string.cvv2_error_not_enough_length
             else -> 0
         }
@@ -153,7 +153,7 @@ class MainActivity : AppCompatActivity() {
         val errorResId = when (error) {
             CardNumberError.INVALID_BRAND_FORMAT -> R.string.number_error_invalid_brand_format
             CardNumberError.INVALID_CARD_NUMBER -> R.string.number_error_invalid_card_number
-            CardNumberError.IS_EMPTY -> R.string.number_error_is_empty
+            CardNumberError.EMPTY -> R.string.number_error_is_empty
             CardNumberError.UNSUPPORTED_BRAND -> R.string.number_error_unsupported_brand
             CardNumberError.NOT_ENOUGH_LENGTH -> R.string.number_error_not_enough_length
             else -> 0
@@ -173,7 +173,7 @@ class MainActivity : AppCompatActivity() {
             CardMonthYearError.YEAR_REQUIRED -> R.string.month_year_error_year_required
             CardMonthYearError.MONTH_INVALID -> R.string.month_year_error_month_invalid
             CardMonthYearError.MONTH_REQUIRED -> R.string.month_year_error_month_required
-            CardMonthYearError.IS_EMPTY -> R.string.month_year_error_is_empty
+            CardMonthYearError.EMPTY -> R.string.month_year_error_is_empty
             else -> 0
         }
 
@@ -186,7 +186,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun bindSecurityCodeError(error: CardSecurityCodeError) {
         val errorResId = when (error) {
-            CardSecurityCodeError.IS_EMPTY -> R.string.cvv2_error_is_empty
+            CardSecurityCodeError.EMPTY -> R.string.cvv2_error_is_empty
             CardSecurityCodeError.NOT_ENOUGH_LENGTH -> R.string.cvv2_error_not_enough_length
             else -> 0
         }

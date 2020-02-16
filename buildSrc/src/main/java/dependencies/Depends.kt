@@ -6,8 +6,7 @@ object Depends {
     object GradlePlugin {
         const val android = "com.android.tools.build:gradle:4.0.0-alpha09"
         const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Kotlin.version}"
-        const val kotlinSerialization =
-            "org.jetbrains.kotlin:kotlin-serialization:${Kotlin.version}"
+        const val kotlinSerialization = "org.jetbrains.kotlin:kotlin-serialization:${Kotlin.version}"
     }
 
     object Test {
@@ -17,6 +16,7 @@ object Depends {
         const val testCoreKtx = "androidx.test:core-ktx:1.2.1-alpha02"
         const val androidJunit4Ktx = "androidx.test.ext:junit-ktx:1.1.2-alpha02"
         const val mockitoKotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
+        const val robolectric = "org.robolectric:robolectric:4.1"
     }
 
     object AndroidX {

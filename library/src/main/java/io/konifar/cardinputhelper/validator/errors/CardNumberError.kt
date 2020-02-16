@@ -1,7 +1,7 @@
 package io.konifar.cardinputhelper.validator.errors
 
 enum class CardNumberError {
-    IS_EMPTY,
+    EMPTY,
     NOT_ENOUGH_LENGTH,
     UNSUPPORTED_BRAND,
     INVALID_BRAND_FORMAT,

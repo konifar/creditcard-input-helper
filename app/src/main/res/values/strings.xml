@@ -3,8 +3,6 @@
 
     <string name="pan">Card number</string>
     <string name="pan_hint">1234 5678 9012 3456</string>
-    <string name="holder_name">Holder name</string>
-    <string name="holder_name_hint">HOLDER NAME</string>
     <string name="expiry_month_year">Expiry (Month / Year)</string>
     <string name="expiry_month_year_hint">04/22</string>
     <string name="cvv2">Security code</string>

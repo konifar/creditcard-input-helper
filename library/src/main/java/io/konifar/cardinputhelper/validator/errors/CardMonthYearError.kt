@@ -1,7 +1,7 @@
 package io.konifar.cardinputhelper.validator.errors
 
 enum class CardMonthYearError {
-    IS_EMPTY,
+    EMPTY,
     MONTH_REQUIRED,
     MONTH_INVALID,
     YEAR_REQUIRED,

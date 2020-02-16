@@ -5,7 +5,7 @@ import io.konifar.cardinputhelper.ext.digitsAndSlash
 object CardMonthYearFormatter {
     const val SLASH = "/"
 
-    fun formatForInserting(monthYear: CharSequence): String {
+    fun formatForInsert(monthYear: CharSequence): String {
         val checkedMonthYear = removeUnnecessarySlash(monthYear.digitsAndSlash())
         if (checkedMonthYear.isEmpty()) {
             return ""
@@ -83,7 +83,7 @@ object CardMonthYearFormatter {
         }
     }
 
-    fun formatForDeleting(monthYear: CharSequence, beforeText: String): String {
+    fun formatForDelete(monthYear: CharSequence, beforeText: String): String {
         if (monthYear.isEmpty() || monthYear.toString() == SLASH) {
             return ""
         }
