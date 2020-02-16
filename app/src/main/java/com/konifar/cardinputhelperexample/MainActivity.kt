@@ -107,7 +107,7 @@ class MainActivity : AppCompatActivity() {
             validateMonthYear()
             validateCvv2()
             val hasError = focusErrorEditText()
-            if (hasError) {
+            if (!hasError) {
                 Toast.makeText(this, R.string.no_error_message, Toast.LENGTH_SHORT).show()
             }
         }
