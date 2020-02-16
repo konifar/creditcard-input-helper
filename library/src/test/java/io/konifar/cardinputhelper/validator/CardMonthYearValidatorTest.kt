@@ -21,7 +21,7 @@ class CardMonthYearValidatorTest {
             @Parameterized.Parameters
             fun data(): List<Array<out Any?>> {
                 return listOf(
-                    arrayOf("", CardMonthYearError.IS_EMPTY),
+                    arrayOf("", CardMonthYearError.EMPTY),
                     arrayOf("/", CardMonthYearError.MONTH_REQUIRED),
                     arrayOf("/1", CardMonthYearError.MONTH_REQUIRED),
                     arrayOf("0/35", CardMonthYearError.MONTH_INVALID),

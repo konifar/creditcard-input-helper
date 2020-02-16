@@ -14,7 +14,7 @@ object CardNumberValidator {
 
     fun validateOnFocusChanged(cardNumber: CharSequence, cardBrand: CardBrand): CardNumberError {
         val number = cardNumber.digits()
-        if (!validateEmpty(number)) return CardNumberError.IS_EMPTY
+        if (!validateEmpty(number)) return CardNumberError.EMPTY
         if (!validateLength(number, cardBrand)) return CardNumberError.NOT_ENOUGH_LENGTH
         if (!validateSupportedBrand(cardBrand)) return CardNumberError.UNSUPPORTED_BRAND
         if (!validateBrandFormat(number, cardBrand)) return CardNumberError.INVALID_BRAND_FORMAT

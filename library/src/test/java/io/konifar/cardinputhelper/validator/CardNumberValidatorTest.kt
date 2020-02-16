@@ -26,7 +26,7 @@ class CardNumberValidatorTest {
             @Parameterized.Parameters
             fun data(): List<Array<out Any?>> {
                 return listOf(
-                    arrayOf("", Visa(), CardNumberError.IS_EMPTY),
+                    arrayOf("", Visa(), CardNumberError.EMPTY),
                     arrayOf("424242424242424", Visa(), CardNumberError.NOT_ENOUGH_LENGTH),
                     arrayOf("4242424242424242", UnSupported(), CardNumberError.UNSUPPORTED_BRAND),
                     arrayOf("5555555555554444", Visa(), CardNumberError.INVALID_BRAND_FORMAT),
