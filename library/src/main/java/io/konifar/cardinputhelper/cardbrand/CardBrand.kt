@@ -69,5 +69,5 @@ interface CardBrand {
 
     fun hasEnoughSecurityCodeLength(code: CharSequence) = code.length >= securityCodeLength
 
-    fun isValidFormat(number: CharSequence) = verifyPattern.matcher(number).matches()
+    fun isValidFormat(number: CharSequence) = verifyPattern.matcher(number.digits()).matches()
 }
