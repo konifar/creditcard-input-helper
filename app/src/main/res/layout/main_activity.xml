@@ -33,7 +33,7 @@
                 <TextView
                     android:id="@+id/pan_label"
                     style="@style/CardLabelText"
-                    android:text="@string/pan"
+                    android:text="@string/number"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,7 +57,7 @@
                         android:id="@+id/pan_edit"
                         style="@style/CardEditText.Number"
                         android:autofillHints="creditCardNumber"
-                        android:hint="@string/pan_hint"
+                        android:hint="@string/number_hint"
                         android:imeOptions="actionNext"
                         android:maxLength="19"
                         android:nextFocusForward="@id/expiry_month_year_edit" />
@@ -97,7 +97,7 @@
                     android:id="@+id/cvv2_label"
                     style="@style/CardLabelText"
                     android:layout_marginTop="@dimen/space_16dp"
-                    android:text="@string/cvv2"
+                    android:text="@string/security_code"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/expiry_month_year" />
 
@@ -113,14 +113,14 @@
                         style="@style/CardEditText.Number"
                         android:layout_width="120dp"
                         android:autofillHints="creditCardSecurityCode"
-                        android:hint="@string/cvv2_hint"
+                        android:hint="@string/security_code_hint"
                         android:imeOptions="actionDone"
                         android:maxLength="4"
                         android:nextFocusForward="@id/check" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.button.MaterialButton
+                <Button
                     android:id="@+id/check"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -1,28 +1,29 @@
 <resources>
     <string name="app_name">CreditCard Input Helper</string>
 
-    <string name="pan">Card number</string>
-    <string name="pan_hint">1234 5678 9012 3456</string>
+    <string name="number">Card number</string>
+    <string name="number_hint">1234 5678 9012 3456</string>
     <string name="expiry_month_year">Expiry (Month / Year)</string>
     <string name="expiry_month_year_hint">04/22</string>
-    <string name="cvv2">Security code</string>
-    <string name="cvv2_hint">123</string>
+    <string name="security_code">Security code</string>
+    <string name="security_code_hint">123</string>
     <string name="check">Check</string>
 
-    <string name="number_error_is_empty">Number is empty</string>
+    <string name="number_error_empty">Number is empty</string>
     <string name="number_error_unsupported_brand">Brand is not supported</string>
     <string name="number_error_not_enough_length">Number is too short</string>
     <string name="number_error_invalid_brand_format">Number format is invalid</string>
     <string name="number_error_invalid_card_number">Number is invalid</string>
 
-    <string name="month_year_error_is_empty">Month/Year is empty</string>
+    <string name="month_year_error_empty">Month/Year is empty</string>
     <string name="month_year_error_expired">Expired</string>
     <string name="month_year_error_year_invalid">Year is invalid</string>
     <string name="month_year_error_year_required">Year is required</string>
     <string name="month_year_error_month_invalid">Month is invalid</string>
     <string name="month_year_error_month_required">Month is required</string>
 
-    <string name="cvv2_error_is_empty">Security code is empty</string>
+    <string name="cvv2_error_empty">Security code is empty</string>
     <string name="cvv2_error_not_enough_length">Security code is too short</string>
 
+    <string name="no_error_message">Card data is valid</string>
 </resources>
