@@ -98,7 +98,7 @@ class CardNumberFormatterTest(
     }
 
     @Test
-    fun from() {
+    fun format() {
         val actual = CardNumberFormatter.format(cardNumber, cardBrand, separatorType)
         assertEquals(output, actual)
     }
