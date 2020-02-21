@@ -14,6 +14,9 @@ import io.konifar.cardinputhelper.CardNumberTextWatcher
 import io.konifar.cardinputhelper.NoCopyAndCutSelectionActionModeCallback
 import io.konifar.cardinputhelper.cardbrand.*
 import io.konifar.cardinputhelper.ext.digits
+import io.konifar.cardinputhelper.focuschange.OnCardMonthYearFocusChangeListener
+import io.konifar.cardinputhelper.focuschange.OnCardNumberFocusChangeListener
+import io.konifar.cardinputhelper.focuschange.OnCardSecurityCodeFocusChangeListener
 import io.konifar.cardinputhelper.formatter.CardNumberSeparatorType
 import io.konifar.cardinputhelper.validator.CardMonthYearValidator
 import io.konifar.cardinputhelper.validator.CardNumberValidator
@@ -56,12 +59,8 @@ class MainActivity : AppCompatActivity() {
                     binding.expiryMonthYearEdit.requestFocus()
                 }
             })
-            setOnFocusChangeListener { _, focus ->
-                if (!focus) {
-                    val brand = CardBrand.from(binding.panEdit.text, SUPPORTED_CARD_BRANDS)
-                    val error = CardNumberValidator.validateOnFocusChanged(binding.panEdit.text, brand)
-                    bindNumberError(error)
-                }
+            onFocusChangeListener = object : OnCardNumberFocusChangeListener(SUPPORTED_CARD_BRANDS) {
+                override fun onErrorDetected(error: CardNumberError) = bindNumberError(error)
             }
 
             customSelectionActionModeCallback = NoCopyAndCutSelectionActionModeCallback()
@@ -75,37 +74,29 @@ class MainActivity : AppCompatActivity() {
                     binding.cvv2Edit.requestFocus()
                 }
             })
-            setOnFocusChangeListener { _, focus ->
-                if (!focus) {
-                    val error = CardMonthYearValidator.validateOnFocusChanged(binding.expiryMonthYearEdit.text)
-                    bindMonthYearError(error)
-                }
+            onFocusChangeListener = object : OnCardMonthYearFocusChangeListener() {
+                override fun onErrorDetected(error: CardMonthYearError) = bindMonthYearError(error)
             }
         }
 
         binding.cvv2Edit.apply {
             addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable) {
-                    bindCvv2Error(CardSecurityCodeError.NONE)
-                }
+                override fun afterTextChanged(s: Editable) = bindSecurityCodeError(CardSecurityCodeError.NONE)
 
                 override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             })
-            setOnFocusChangeListener { _, focus ->
-                if (!focus) {
-                    val brand = CardBrand.from(binding.panEdit.text, SUPPORTED_CARD_BRANDS)
-                    val error = CardSecurityCodeValidator.validateOnFocusChanged(binding.cvv2Edit.text, brand)
-                    bindSecurityCodeError(error)
+            onFocusChangeListener =
+                object : OnCardSecurityCodeFocusChangeListener(binding.panEdit, SUPPORTED_CARD_BRANDS) {
+                    override fun onErrorDetected(error: CardSecurityCodeError) = bindSecurityCodeError(error)
                 }
-            }
         }
 
         binding.check.setOnClickListener {
             validateNumber()
             validateMonthYear()
-            validateCvv2()
+            validateSecurityCode()
             val hasError = focusErrorEditText()
             if (!hasError) {
                 Toast.makeText(this, R.string.no_error_message, Toast.LENGTH_SHORT).show()
@@ -121,25 +112,11 @@ class MainActivity : AppCompatActivity() {
         binding.cvv2.error = null
     }
 
-    private fun validateCvv2() {
+    private fun validateSecurityCode() {
         val cvv2 = binding.cvv2Edit.text
         val number = binding.panEdit.text.digits()
         val error = CardSecurityCodeValidator.validateOnFocusChanged(cvv2, number, SUPPORTED_CARD_BRANDS)
-        bindCvv2Error(error)
-    }
-
-    private fun bindCvv2Error(error: CardSecurityCodeError) {
-        val errorResId = when (error) {
-            CardSecurityCodeError.EMPTY -> R.string.cvv2_error_empty
-            CardSecurityCodeError.NOT_ENOUGH_LENGTH -> R.string.cvv2_error_not_enough_length
-            else -> 0
-        }
-
-        if (errorResId > 0) {
-            binding.cvv2.error = getString(errorResId)
-        } else {
-            binding.cvv2.error = null
-        }
+        bindSecurityCodeError(error)
     }
 
     private fun validateMonthYear() {
