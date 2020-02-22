@@ -179,4 +179,70 @@ class CardMonthYearFormatterTest {
             assertEquals(output, CardMonthYearFormatter.calculateCursorPos(inputFormatted, inputAfter, inputBefore))
         }
     }
+
+    @RunWith(Parameterized::class)
+    class ExtractMonth(
+        private val inputMonthYear: String,
+        private val inputZeroPadding: Boolean,
+        private val output: String
+    ) {
+
+        companion object {
+            @JvmStatic
+            @Parameterized.Parameters
+            fun data(): List<Array<out Any?>> {
+                return listOf(
+                    arrayOf("", false, ""),
+                    arrayOf("/", false, ""),
+                    arrayOf("0/", false, "0"),
+                    arrayOf("01/", false, "01"),
+                    arrayOf("1/", false, "1"),
+                    arrayOf("10/", false, "10"),
+                    arrayOf("1/30", false, "1"),
+                    arrayOf("01/30", false, "01"),
+                    arrayOf("10/30", false, "10"),
+                    arrayOf("0/", true, "0"),
+                    arrayOf("01/", true, "01"),
+                    arrayOf("1/", true, "01"),
+                    arrayOf("10/", true, "10"),
+                    arrayOf("1/30", true, "01"),
+                    arrayOf("01/30", true, "01"),
+                    arrayOf("10/30", true, "10")
+                )
+            }
+        }
+
+        @Test
+        fun extractMonth() {
+            assertEquals(output, CardMonthYearFormatter.extractMonth(inputMonthYear, inputZeroPadding))
+        }
+    }
+
+    @RunWith(Parameterized::class)
+    class ExtractYear(
+        private val inputMonthYear: String,
+        private val output: String
+    ) {
+
+        companion object {
+            @JvmStatic
+            @Parameterized.Parameters
+            fun data(): List<Array<out Any?>> {
+                return listOf(
+                    arrayOf("", ""),
+                    arrayOf("/", ""),
+                    arrayOf("/0", "0"),
+                    arrayOf("/1", "1"),
+                    arrayOf("/20", "20"),
+                    arrayOf("10/20", "20"),
+                    arrayOf("0/20", "20")
+                )
+            }
+        }
+
+        @Test
+        fun extractYear() {
+            assertEquals(output, CardMonthYearFormatter.extractYear(inputMonthYear))
+        }
+    }
 }
