@@ -3,11 +3,12 @@ import dependencies.Versions
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.github.dcendents.android-maven'
 apply from: "$rootDir/gradle/app-version.gradle"
 
-group = 'com.github.konifar'
+group = 'com.github.konifar.creditcard-input-helper'
+
+version = project.appVersionName
 
 android {
     compileSdkVersion Versions.androidCompileSdkVersion
@@ -22,7 +23,9 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
+            debuggable false
+            zipAlignEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
