@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
                     binding.cvv2Edit.requestFocus()
                 }
             })
-            onFocusChangeListener = object : OnCardMonthYearFocusChangeListener() {
+            onFocusChangeListener = object : OnCardMonthYearFocusChangeListener(true) {
                 override fun onErrorDetected(error: CardMonthYearError) = bindMonthYearError(error)
             }
         }
