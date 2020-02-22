@@ -39,3 +39,13 @@ dependencies {
     testImplementation Depends.Test.junit
     testImplementation Depends.Test.robolectric
 }
+
+// build a jar with source files
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+artifacts {
+    archives sourcesJar
+}
