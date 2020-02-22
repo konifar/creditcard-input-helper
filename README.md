@@ -23,7 +23,7 @@ allprojects {
 ```groovy
 dependencies {
     ...
-    implementation 'io.konifar.cardinputhelper:LATEST_VERSION'
+    implementation 'com.github.konifar:creditcard-input-helper:LATEST_VERSION'
 }
 ```
 
