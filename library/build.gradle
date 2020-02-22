@@ -4,7 +4,10 @@ import dependencies.Versions
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.github.dcendents.android-maven'
 apply from: "$rootDir/gradle/app-version.gradle"
+
+group = 'io.konifar.cardinputhelper'
 
 android {
     compileSdkVersion Versions.androidCompileSdkVersion
