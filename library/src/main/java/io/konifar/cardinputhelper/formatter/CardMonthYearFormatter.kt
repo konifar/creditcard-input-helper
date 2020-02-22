@@ -175,7 +175,7 @@ object CardMonthYearFormatter {
     fun extractMonth(monthYear: String, zeroPadding: Boolean = false): String {
         val list = monthYear.split(SLASH)
         val month = if (list.isEmpty()) "" else list.first().digits()
-        return if (month.isNotEmpty() && month.toInt() in 2..9) {
+        return if (zeroPadding && month.isNotEmpty() && month.toInt() in 2..9) {
             "0${month.toInt()}"
         } else {
             month
