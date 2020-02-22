@@ -1,5 +1,6 @@
 package io.konifar.cardinputhelper.formatter
 
+import io.konifar.cardinputhelper.ext.digits
 import io.konifar.cardinputhelper.ext.digitsAndSlash
 
 object CardMonthYearFormatter {
@@ -169,6 +170,26 @@ object CardMonthYearFormatter {
         }
 
         return formatted.length
+    }
+
+    fun extractMonth(monthYear: String, zeroPadding: Boolean = false): String {
+        val list = monthYear.split(SLASH)
+        val month = if (list.isEmpty()) "" else list.first().digits()
+        return if (zeroPadding && month.isNotEmpty() && month.toInt() in 1..9) {
+            "0${month.toInt()}"
+        } else {
+            month
+        }
+    }
+
+    fun extractYear(monthYear: String, fullDigits: Boolean = false): String {
+        val list = monthYear.split(SLASH)
+        val year = if (list.size < 2) "" else list.last()
+        return if (fullDigits && year.length == 2) {
+            "20$year"
+        } else {
+            year
+        }
     }
 
     private fun getCurrentCursorPos(originalAfter: CharSequence, originalBefore: CharSequence): Int {
