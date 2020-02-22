@@ -182,9 +182,14 @@ object CardMonthYearFormatter {
         }
     }
 
-    fun extractYear(monthYear: String): String {
+    fun extractYear(monthYear: String, fullDigits: Boolean = false): String {
         val list = monthYear.split(SLASH)
-        return if (list.size < 2) "" else list.last()
+        val year = if (list.size < 2) "" else list.last()
+        return if (fullDigits && year.length == 2) {
+            "20$year"
+        } else {
+            year
+        }
     }
 
     private fun getCurrentCursorPos(originalAfter: CharSequence, originalBefore: CharSequence): Int {

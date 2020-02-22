@@ -221,6 +221,7 @@ class CardMonthYearFormatterTest {
     @RunWith(Parameterized::class)
     class ExtractYear(
         private val inputMonthYear: String,
+        private val inputFullDigits: Boolean,
         private val output: String
     ) {
 
@@ -229,20 +230,28 @@ class CardMonthYearFormatterTest {
             @Parameterized.Parameters
             fun data(): List<Array<out Any?>> {
                 return listOf(
-                    arrayOf("", ""),
-                    arrayOf("/", ""),
-                    arrayOf("/0", "0"),
-                    arrayOf("/1", "1"),
-                    arrayOf("/20", "20"),
-                    arrayOf("10/20", "20"),
-                    arrayOf("0/20", "20")
+                    arrayOf("", false, ""),
+                    arrayOf("/", false, ""),
+                    arrayOf("/0", false, "0"),
+                    arrayOf("/1", false, "1"),
+                    arrayOf("/20", false, "20"),
+                    arrayOf("10/20", false, "20"),
+                    arrayOf("0/20", false, "20"),
+                    arrayOf("", true, ""),
+                    arrayOf("/", true, ""),
+                    arrayOf("/0", true, "0"),
+                    arrayOf("/1", true, "1"),
+                    arrayOf("/01", true, "2001"),
+                    arrayOf("/20", true, "2020"),
+                    arrayOf("10/20", true, "2020"),
+                    arrayOf("0/20", true, "2020")
                 )
             }
         }
 
         @Test
         fun extractYear() {
-            assertEquals(output, CardMonthYearFormatter.extractYear(inputMonthYear))
+            assertEquals(output, CardMonthYearFormatter.extractYear(inputMonthYear, inputFullDigits))
         }
     }
 }
