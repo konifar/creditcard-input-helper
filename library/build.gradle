@@ -7,7 +7,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.github.dcendents.android-maven'
 apply from: "$rootDir/gradle/app-version.gradle"
 
-group = 'io.konifar.cardinputhelper'
+group = 'com.github.konifar'
 
 android {
     compileSdkVersion Versions.androidCompileSdkVersion
