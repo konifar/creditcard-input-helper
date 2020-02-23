@@ -46,7 +46,7 @@ object CardMonthYearValidator {
         val currentYear = Calendar.getInstance().get(Calendar.YEAR) % 100
         val currentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1
 
-        if (year.toInt() > currentYear + 20) return CardMonthYearError.YEAR_INVALID
+        if (year.toInt() > currentYear + 20) return CardMonthYearError.YEAR_OVER_20_YEARS_LATER
         if (year.toInt() < currentYear || (year.toInt() == currentYear && month.toInt() < currentMonth)) return CardMonthYearError.EXPIRED
 
         return null

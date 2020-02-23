@@ -5,7 +5,7 @@ enum class CardMonthYearError {
     MONTH_REQUIRED,
     MONTH_INVALID,
     YEAR_REQUIRED,
-    YEAR_INVALID,
+    YEAR_OVER_20_YEARS_LATER,
     EXPIRED,
     NONE,
 }

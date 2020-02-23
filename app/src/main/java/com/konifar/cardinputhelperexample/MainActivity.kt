@@ -160,7 +160,7 @@ class MainActivity : AppCompatActivity() {
     private fun bindMonthYearError(error: CardMonthYearError) {
         val errorResId = when (error) {
             CardMonthYearError.EXPIRED -> R.string.month_year_error_expired
-            CardMonthYearError.YEAR_INVALID -> R.string.month_year_error_year_invalid
+            CardMonthYearError.YEAR_OVER_20_YEARS_LATER -> R.string.month_year_error_year_invalid
             CardMonthYearError.YEAR_REQUIRED -> R.string.month_year_error_year_required
             CardMonthYearError.MONTH_INVALID -> R.string.month_year_error_month_invalid
             CardMonthYearError.MONTH_REQUIRED -> R.string.month_year_error_month_required
