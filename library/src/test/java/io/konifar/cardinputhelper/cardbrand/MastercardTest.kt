@@ -28,7 +28,15 @@ class MastercardTest {
                     arrayOf("6123", false),
                     arrayOf("4123", false),
                     arrayOf("5512", true),
-                    arrayOf("5612", false)
+                    arrayOf("5612", false),
+                    arrayOf("2", false),
+                    arrayOf("22", false),
+                    arrayOf("222", false),
+                    arrayOf("2222", true),
+                    arrayOf("2122", false),
+                    arrayOf("2722", true),
+                    arrayOf("2822", false),
+                    arrayOf("3222", false)
                 )
             }
         }
@@ -56,7 +64,12 @@ class MastercardTest {
                     arrayOf("51234567890123456", false),
                     arrayOf("5123456789012345", true),
                     arrayOf("5623456789012345", false),
-                    arrayOf("6123456789012345", false)
+                    arrayOf("6123456789012345", false),
+                    arrayOf("222212345678901", false),
+                    arrayOf("22221234567890123", false),
+                    arrayOf("2222123456789012", true),
+                    arrayOf("2122123456789012", false),
+                    arrayOf("2822123456789012", false)
                 )
             }
         }
