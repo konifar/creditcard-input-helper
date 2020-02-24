@@ -3,7 +3,7 @@ package io.konifar.cardinputhelper.focuschange
 import android.annotation.SuppressLint
 import android.view.View
 import android.widget.EditText
-import io.konifar.cardinputhelper.formatter.CardMonthYearFormatter
+import io.konifar.cardinputhelper.CardMonthYear
 import io.konifar.cardinputhelper.formatter.CardMonthYearFormatter.SLASH
 import io.konifar.cardinputhelper.validator.CardMonthYearValidator
 import io.konifar.cardinputhelper.validator.errors.CardMonthYearError
@@ -28,8 +28,7 @@ open class OnCardMonthYearFocusChangeListener(
     @SuppressLint("SetTextI18n")
     private fun insertMonthZeroIfNeed(editText: EditText) {
         val text = editText.text.toString()
-        val month = CardMonthYearFormatter.extractMonth(text, true)
-        val year = CardMonthYearFormatter.extractYear(text)
-        editText.setText("$month$SLASH$year")
+        val monthYear = CardMonthYear.from(text, true, false)
+        editText.setText("${monthYear.month}$SLASH${monthYear.year}")
     }
 }

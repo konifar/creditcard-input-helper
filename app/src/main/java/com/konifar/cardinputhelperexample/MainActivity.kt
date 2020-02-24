@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.konifar.cardinputhelper.R
 import com.konifar.cardinputhelper.databinding.MainActivityBinding
+import io.konifar.cardinputhelper.CardMonthYear
 import io.konifar.cardinputhelper.CardMonthYearTextWatcher
 import io.konifar.cardinputhelper.CardNumberTextWatcher
 import io.konifar.cardinputhelper.NoCopyAndCutSelectionActionModeCallback
@@ -17,7 +18,6 @@ import io.konifar.cardinputhelper.ext.digits
 import io.konifar.cardinputhelper.focuschange.OnCardMonthYearFocusChangeListener
 import io.konifar.cardinputhelper.focuschange.OnCardNumberFocusChangeListener
 import io.konifar.cardinputhelper.focuschange.OnCardSecurityCodeFocusChangeListener
-import io.konifar.cardinputhelper.formatter.CardMonthYearFormatter
 import io.konifar.cardinputhelper.formatter.CardNumberSeparatorType
 import io.konifar.cardinputhelper.validator.CardMonthYearValidator
 import io.konifar.cardinputhelper.validator.CardNumberValidator
@@ -107,10 +107,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun showSuccessToast() {
         val number = binding.panEdit.text
-        val month = CardMonthYearFormatter.extractMonth(binding.expiryMonthYearEdit.text.toString(), true)
-        val year = CardMonthYearFormatter.extractYear(binding.expiryMonthYearEdit.text.toString(), true)
+        val monthYear = CardMonthYear.from(binding.expiryMonthYearEdit.text.toString(), true, true)
         val securityCode = binding.cvv2Edit.text
-        val text = "Number: $number\nMonth: $month\nYear: $year\nSecurityCode: $securityCode"
+        val text = "Number: $number\nMonth: ${monthYear.month}\nYear: ${monthYear.year}\nSecurityCode: $securityCode"
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
     }
 
