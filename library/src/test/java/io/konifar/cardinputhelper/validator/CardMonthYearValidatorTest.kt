@@ -28,7 +28,12 @@ class CardMonthYearValidatorTest {
                     arrayOf("13/1", CardMonthYearError.MONTH_INVALID),
                     arrayOf("1/", CardMonthYearError.YEAR_REQUIRED),
                     arrayOf("12/", CardMonthYearError.YEAR_REQUIRED),
-                    arrayOf("12/36", CardMonthYearError.NONE)
+                    arrayOf("12/36", CardMonthYearError.NONE),
+                    arrayOf(" /36", CardMonthYearError.MONTH_INVALID),
+                    arrayOf(";/36", CardMonthYearError.MONTH_INVALID),
+                    arrayOf("12/ ", CardMonthYearError.YEAR_INVALID),
+                    arrayOf("12/;", CardMonthYearError.YEAR_INVALID),
+                    arrayOf(" / ", CardMonthYearError.MONTH_INVALID)
                 )
             }
         }
@@ -58,7 +63,14 @@ class CardMonthYearValidatorTest {
                     arrayOf("13/35", CardMonthYearError.MONTH_INVALID),
                     arrayOf("1/", CardMonthYearError.NONE),
                     arrayOf("12/", CardMonthYearError.NONE),
-                    arrayOf("12/36", CardMonthYearError.NONE)
+                    arrayOf("12/36", CardMonthYearError.NONE),
+                    arrayOf(" /36", CardMonthYearError.MONTH_INVALID),
+                    arrayOf(";/36", CardMonthYearError.MONTH_INVALID),
+                    arrayOf("12/ ", CardMonthYearError.NONE),
+                    arrayOf("12/;", CardMonthYearError.NONE),
+                    arrayOf(" / ", CardMonthYearError.NONE),
+                    arrayOf("12/  ", CardMonthYearError.YEAR_INVALID),
+                    arrayOf("12/;;", CardMonthYearError.YEAR_INVALID)
                 )
             }
         }
