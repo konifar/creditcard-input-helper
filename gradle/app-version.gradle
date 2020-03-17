@@ -1,6 +1,6 @@
 def major = 0
 def minor = 4
-def patch = 0
+def patch = 1
 
 def versionCode = 0
 if (System.getenv("CIRCLE_TAG") != null) {
