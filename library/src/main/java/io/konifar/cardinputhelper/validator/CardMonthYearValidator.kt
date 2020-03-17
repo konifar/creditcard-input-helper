@@ -39,15 +39,18 @@ object CardMonthYearValidator {
 
     private fun checkMonthYear(month: String, year: String): CardMonthYearError? {
         if (month.isEmpty()) return CardMonthYearError.MONTH_REQUIRED
-        if (month.toInt() > 12 || month.toInt() <= 0) return CardMonthYearError.MONTH_INVALID
+        val monthInt = month.toIntOrNull()
+        if (monthInt == null || monthInt > 12 || monthInt <= 0) return CardMonthYearError.MONTH_INVALID
 
         if (year.isEmpty()) return CardMonthYearError.YEAR_REQUIRED
+
+        val yearInt = year.toIntOrNull() ?: return CardMonthYearError.YEAR_INVALID
 
         val currentYear = Calendar.getInstance().get(Calendar.YEAR) % 100
         val currentMonth = Calendar.getInstance().get(Calendar.MONTH) + 1
 
-        if (year.toInt() > currentYear + 20) return CardMonthYearError.YEAR_OVER_20_YEARS_LATER
-        if (year.toInt() < currentYear || (year.toInt() == currentYear && month.toInt() < currentMonth)) return CardMonthYearError.EXPIRED
+        if (yearInt > currentYear + 20) return CardMonthYearError.YEAR_OVER_20_YEARS_LATER
+        if (yearInt < currentYear || (yearInt == currentYear && monthInt < currentMonth)) return CardMonthYearError.EXPIRED
 
         return null
     }
