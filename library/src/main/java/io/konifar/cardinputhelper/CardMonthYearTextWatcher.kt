@@ -42,14 +42,16 @@ open class CardMonthYearTextWatcher(
                 CardMonthYearFormatter.formatForInsert(s)
             }
 
-            s.replace(0, s.length, formattedText)
-            val error = CardMonthYearValidator.validateOnTextChanged(formattedText)
-            onCardMonthYearErrorChanged(error)
+            if (formattedText != beforeText) {
+                s.replace(0, s.length, formattedText)
+                val error = CardMonthYearValidator.validateOnTextChanged(formattedText)
+                onCardMonthYearErrorChanged(error)
 
-            val cursorPos = CardMonthYearFormatter.calculateCursorPos(formattedText, beforeText, oldBeforeText)
-            Selection.setSelection(s, cursorPos)
+                val cursorPos = CardMonthYearFormatter.calculateCursorPos(formattedText, beforeText, oldBeforeText)
+                Selection.setSelection(s, cursorPos)
 
-            checkEditCompleted(formattedText)
+                checkEditCompleted(formattedText)
+            }
 
             isChangingText = false
         }
